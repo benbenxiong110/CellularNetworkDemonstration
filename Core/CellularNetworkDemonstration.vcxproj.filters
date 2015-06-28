@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Application.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuPanel.cpp">
+      <Filter>Main\UI Component</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Lib">
+      <UniqueIdentifier>{bcdd9458-f4de-4d44-8b1f-ffb599940b79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\SDL">
+      <UniqueIdentifier>{84d497bb-1b86-408f-80a9-27d783d4151b}</UniqueIdentifier>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Lib\SDL-image">
+      <UniqueIdentifier>{2a891647-3d71-478b-b985-a8a737649e8f}</UniqueIdentifier>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Lib\SDL-ttf">
+      <UniqueIdentifier>{d774770f-fe92-408a-9cd5-838da0e258fa}</UniqueIdentifier>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{d2073eb9-b793-4714-abba-f848b519bb4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\Tools">
+      <UniqueIdentifier>{23714329-0d75-43c2-aff1-a18fba43e31e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\UI Component">
+      <UniqueIdentifier>{c99745d8-2cb1-4373-9c27-e31c785b53be}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>Main\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuPanel.h">
+      <Filter>Main\UI Component</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
