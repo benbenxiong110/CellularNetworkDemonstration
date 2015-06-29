@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include "Console.h"
+#include "MenuPanel.h"
 
 namespace CellularNetworkDemonstration {
 
@@ -37,14 +38,17 @@ namespace CellularNetworkDemonstration {
                 return false;
             }
             log("初始化组件...");
+            m_pMenuPanel = new MenuPanel(m_pRenderer);
 
             log("初始化完成");
             m_bRunning = true; 
             return true;
         }
         void render() {
+            SDL_Texture* pMenuPanel = m_pMenuPanel->render();
+            SDL_SetRenderTarget(m_pRenderer,NULL);
             SDL_RenderClear(m_pRenderer); 
-            
+            SDL_RenderCopy(m_pRenderer, pMenuPanel, m_pMenuPanel->Rect(), NULL);
             SDL_RenderPresent(m_pRenderer); 
         }
         void update() {
@@ -74,5 +78,7 @@ namespace CellularNetworkDemonstration {
         SDL_Window* m_pWindow;
         SDL_Renderer* m_pRenderer;
         bool m_bRunning;
+
+        MenuPanel* m_pMenuPanel;
     };
 }

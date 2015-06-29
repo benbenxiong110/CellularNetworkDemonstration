@@ -4,9 +4,7 @@ namespace CellularNetworkDemonstration {
     Application::Application() {
     }
 
-
     Application::~Application() {
     }
-
 
 }
