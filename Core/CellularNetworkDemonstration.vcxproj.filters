@@ -8,6 +8,12 @@
     <ClCompile Include="MenuPanel.cpp">
       <Filter>Main\UI Component</Filter>
     </ClCompile>
+    <ClCompile Include="UIBase.cpp">
+      <Filter>Main\UI Component\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewPanel.cpp">
+      <Filter>Main\UI Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Lib">
@@ -34,6 +40,16 @@
     <Filter Include="Main\UI Component">
       <UniqueIdentifier>{c99745d8-2cb1-4373-9c27-e31c785b53be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Res">
+      <UniqueIdentifier>{6cb0ec1a-835d-4e5c-bad8-be9e39368036}</UniqueIdentifier>
+      <Extensions>*.png;*.jpg;*.gif</Extensions>
+    </Filter>
+    <Filter Include="Main\UI Component\Base">
+      <UniqueIdentifier>{3c137895-06a5-4e4b-989f-f57ac0a7cfd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\UI Component\MenuPanel">
+      <UniqueIdentifier>{75ac6997-0073-4ee3-b172-529da5aa91f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -45,5 +61,25 @@
     <ClInclude Include="MenuPanel.h">
       <Filter>Main\UI Component</Filter>
     </ClInclude>
+    <ClInclude Include="UIBase.h">
+      <Filter>Main\UI Component\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="UIRefresh.h">
+      <Filter>Main\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewPanel.h">
+      <Filter>Main\UI Component</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuSystemClose.h">
+      <Filter>Main\UI Component\MenuPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuSystemMinimize.h">
+      <Filter>Main\UI Component\MenuPanel</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="menubar.png">
+      <Filter>Res</Filter>
+    </Image>
   </ItemGroup>
 </Project>

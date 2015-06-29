@@ -1,8 +1,5 @@
-#include "MenuPanel.h"
-#include <SDL.h>
-
+#include "ViewPanel.h"
 namespace CellularNetworkDemonstration {
 
-
-
 }
+

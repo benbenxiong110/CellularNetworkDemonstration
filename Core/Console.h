@@ -8,7 +8,7 @@ namespace CellularNetworkDemonstration {
 #endif // DEBUG
     }
 
-    static void log(double *num) {
+    static void log(long double num) {
 #ifdef DEBUG
         std::cout << num << std::endl;
 #endif // DEBUG

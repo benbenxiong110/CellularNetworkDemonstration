@@ -89,11 +89,21 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuPanel.cpp" />
+    <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="ViewPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="MenuPanel.h" />
+    <ClInclude Include="MenuSystemClose.h" />
+    <ClInclude Include="MenuSystemMinimize.h" />
+    <ClInclude Include="UIBase.h" />
+    <ClInclude Include="UIRefresh.h" />
+    <ClInclude Include="ViewPanel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="menubar.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
