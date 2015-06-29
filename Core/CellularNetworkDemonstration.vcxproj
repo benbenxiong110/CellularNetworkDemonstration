@@ -89,6 +89,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuPanel.cpp" />
+    <ClCompile Include="MouseManager.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="ViewPanel.cpp" />
   </ItemGroup>
@@ -98,6 +99,7 @@
     <ClInclude Include="MenuPanel.h" />
     <ClInclude Include="MenuSystemClose.h" />
     <ClInclude Include="MenuSystemMinimize.h" />
+    <ClInclude Include="MouseManager.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="UIRefresh.h" />
     <ClInclude Include="ViewPanel.h" />

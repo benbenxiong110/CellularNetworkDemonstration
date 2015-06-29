@@ -3,6 +3,7 @@
 #include "Console.h"
 #include "MenuPanel.h"
 #include "ViewPanel.h"
+#include "MouseManager.h"
 
 namespace CellularNetworkDemonstration {
 
@@ -84,6 +85,18 @@ namespace CellularNetworkDemonstration {
                     case SDL_QUIT:
                         m_bRunning = false;
                         break;
+                    case SDL_MOUSEBUTTONUP:
+                        MouseManager::get().OnMouseButtonUp(event);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        MouseManager::get().OnMouseButtonDown(event);
+                        break;
+                    case SDL_MOUSEMOTION:
+                        MouseManager::get().OnMouseMotion(event);
+                        break;
+                    case SDL_MOUSEWHEEL:
+                        MouseManager::get().OnMouseWheel(event);
+
                     default:
                         break;
                 }
