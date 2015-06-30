@@ -18,9 +18,7 @@ namespace CellularNetworkDemonstration {
         if (m_pTexture) {
             SDL_DestroyTexture(m_pTexture);
         }
-        if (m_pRect) {
-            delete m_pRect;
-        }
+        DELETE_IF_EXIST(m_pRect)
     }
 
 

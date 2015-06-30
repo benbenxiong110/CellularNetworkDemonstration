@@ -14,7 +14,9 @@
     <ClCompile Include="ViewPanel.cpp">
       <Filter>Main\UI Component</Filter>
     </ClCompile>
-    <ClCompile Include="MouseManager.cpp" />
+    <ClCompile Include="MouseManager.cpp">
+      <Filter>Main\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Lib">
@@ -51,6 +53,12 @@
     <Filter Include="Main\UI Component\MenuPanel">
       <UniqueIdentifier>{75ac6997-0073-4ee3-b172-529da5aa91f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Main\UI Component\ViewPanel">
+      <UniqueIdentifier>{11295ae7-c820-4984-a783-750a20677f52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\UI Component\ViewPanel\WelcomeView">
+      <UniqueIdentifier>{1ad80016-fe86-4462-822e-f960ec9a2f31}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -77,7 +85,18 @@
     <ClInclude Include="MenuSystemMinimize.h">
       <Filter>Main\UI Component\MenuPanel</Filter>
     </ClInclude>
-    <ClInclude Include="MouseManager.h" />
+    <ClInclude Include="MouseManager.h">
+      <Filter>Main\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Extends.h">
+      <Filter>Main\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Include.h">
+      <Filter>Main\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="StdInclude.h">
+      <Filter>Main\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="menubar.png">

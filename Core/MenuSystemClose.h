@@ -1,6 +1,5 @@
 #pragma once
-#include <SDL.h>
-#include <SDL_image.h>
+#include "Include.h"
 #include "UIBase.h"
 namespace CellularNetworkDemonstration {
 

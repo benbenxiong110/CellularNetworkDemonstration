@@ -1,9 +1,7 @@
 #pragma once
-#include <SDL.h>
-#include "Console.h"
+#include "Include.h"
 #include "MenuPanel.h"
 #include "ViewPanel.h"
-#include "MouseManager.h"
 
 namespace CellularNetworkDemonstration {
 
@@ -76,6 +74,7 @@ namespace CellularNetworkDemonstration {
         }
         void update() {
             //log("Update Application");
+            
         }
         void handleEvents() {
             //log("Handle Events");
@@ -96,7 +95,6 @@ namespace CellularNetworkDemonstration {
                         break;
                     case SDL_MOUSEWHEEL:
                         MouseManager::get().OnMouseWheel(event);
-
                     default:
                         break;
                 }

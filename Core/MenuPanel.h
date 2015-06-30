@@ -1,6 +1,5 @@
 #pragma once
-#include <SDL.h>
-#include <SDL_image.h>
+#include "Include.h"
 #include "UIBase.h"
 #include "MenuSystemClose.h"
 #include "MenuSystemMinimize.h"
@@ -28,6 +27,7 @@ namespace CellularNetworkDemonstration {
             m_pMenuSystemMinimizeRect->h = 20;
 
         }
+
         ~MenuPanel() {
             // 清理子元素和资源
 

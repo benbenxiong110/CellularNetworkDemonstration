@@ -1,5 +1,5 @@
 #pragma once
-#include <SDL.h>
+#include "Include.h"
 
 #define DELETE_IF_EXIST(POINTER) if(POINTER){delete (POINTER);}
 
