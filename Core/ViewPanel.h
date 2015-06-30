@@ -9,12 +9,20 @@ namespace CellularNetworkDemonstration {
             :UIBase(renderer, 800, 450) {
             //初始化子元素
 
+            // 设置属性
+            m_iViewIndex = 0;
         }
         ~ViewPanel() {
             // 清理子元素和资源
         }
-
+        void setViewIndex(int index) {
+            //TODO: Do page changing.
+            m_iViewIndex = index;
+        }
     private:
+        // 属性
+        int m_iViewIndex;
+
         // 子元素
         
 

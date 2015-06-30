@@ -41,7 +41,17 @@ namespace CellularNetworkDemonstration {
             }
         }
 
+        void setMousePosition(const SDL_Point mousePoint) {
+            m_sMousePosition = mousePoint;
+        }
+
+        int getViewIndex()const {
+            return m_iViewIndex;
+        }
     private:
+        // 属性
+        int m_iViewIndex;
+        SDL_Point m_sMousePosition;
 
         // 资源
         SDL_Texture *m_pMenuImage;
@@ -55,6 +65,9 @@ namespace CellularNetworkDemonstration {
 
         // 绘制界面元素
         virtual void renderUI() {
+            m_pMenuSystemCloseRect->x = m_sMousePosition.x - m_pMenuSystemCloseRect->w/2;
+            m_pMenuSystemCloseRect->y = m_sMousePosition.y - m_pMenuSystemCloseRect->h / 2;
+
             SDL_SetRenderDrawColor(m_pRenderer, 20, 120, 220, 255);
             SDL_RenderClear(m_pRenderer);
             SDL_RenderCopy(m_pRenderer, m_pMenuImage, nullptr, nullptr);

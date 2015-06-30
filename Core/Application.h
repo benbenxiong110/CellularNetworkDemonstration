@@ -56,7 +56,7 @@ namespace CellularNetworkDemonstration {
             static long last;
             static long now;
             now = SDL_GetTicks();
-            SDL_Delay(20);
+            // SDL_Delay(20);
             if (now - last > 1000 / 60) {
                 if (now - last > 100) {
                     log("Low Performance!!!");
@@ -74,7 +74,15 @@ namespace CellularNetworkDemonstration {
         }
         void update() {
             //log("Update Application");
-            
+            // Handle Mouse Pointer
+            SDL_Point point = MouseManager::get().getPoint();
+            if (SDL_PointInRect(point, *m_pMenuPanelRect)) {
+                // Hit Menu Panel
+                m_pMenuPanel->setMousePosition(SDL_RelationPoint(&point, m_pMenuPanelRect));
+            } else if (SDL_PointInRect(point, *m_pViewPanelRect)) {
+                // Hit Main View
+            }
+            m_pViewPanel->setViewIndex(m_pMenuPanel->getViewIndex());
         }
         void handleEvents() {
             //log("Handle Events");

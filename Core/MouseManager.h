@@ -47,8 +47,8 @@ namespace CellularNetworkDemonstration {
         }
 
         void OnMouseMotion(const SDL_Event &event) {
-            x = event.motion.x;
-            y = event.motion.y;
+            point.x = event.motion.x;
+            point.y = event.motion.y;
         }
 
         void OnMouseWheel(const SDL_Event &event) {
@@ -56,10 +56,10 @@ namespace CellularNetworkDemonstration {
         }
 
         bool isMouseInRect(const SDL_Rect* rect) {
-            return x >= rect->x
-                &&y >= rect->y
-                &&x <= rect->x + rect->w
-                &&y <= rect->y + rect->h;
+            return point.x >= rect->x
+                &&point.y >= rect->y
+                &&point.x <= rect->x + rect->w
+                &&point.y <= rect->y + rect->h;
         }
 
         bool isLeftButtonDown() const {
@@ -77,22 +77,26 @@ namespace CellularNetworkDemonstration {
         }
 
         int getX() const {
-            return x;
+            return point.x;
         }
 
         int getY() const {
-            return y;
+            return point.y;
+        }
+
+        SDL_Point getPoint() const {
+            return point;
         }
     private:
         MouseManager() {
-            x = 0; y = 0;
+            point.x = 0; point.y = 0;
             xRel = 0; yRel = 0;
             leftButtonDown = false;
             middleButtonDown = false;
             rightButtonDown = false;
             wheelPosition = 0;
         }
-        int x, y;
+        SDL_Point point;
         int xRel, yRel;
         bool leftButtonDown;
         bool middleButtonDown;

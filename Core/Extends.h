@@ -15,4 +15,8 @@ namespace CellularNetworkDemonstration {
         return ( ( x >= r.x ) && ( x < ( r.x + r.w ) ) &&
             ( y >= r.y ) && ( y < ( r.y + r.h ) ) ) ? SDL_TRUE : SDL_FALSE;
     }
+
+    SDL_FORCE_INLINE SDL_Point SDL_RelationPoint(const SDL_Point *p, const SDL_Rect *r) {
+        return SDL_Point{ p->x - r->x, p->y - r->y };
+    }
 }
