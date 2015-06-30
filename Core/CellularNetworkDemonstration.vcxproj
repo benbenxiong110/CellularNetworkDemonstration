@@ -95,12 +95,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="ButtonBase.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="Extends.h" />
     <ClInclude Include="Include.h" />
     <ClInclude Include="MenuPanel.h" />
     <ClInclude Include="MenuSystemClose.h" />
     <ClInclude Include="MenuSystemMinimize.h" />
+    <ClInclude Include="MenuViewSelector.h" />
+    <ClInclude Include="MenuViewSelectorHub.h" />
     <ClInclude Include="MouseManager.h" />
     <ClInclude Include="StdInclude.h" />
     <ClInclude Include="UIBase.h" />

@@ -34,16 +34,13 @@ namespace CellularNetworkDemonstration {
             DELETE_IF_EXIST(m_pMenuSystemMinimize)
             DELETE_IF_EXIST(m_pMenuSystemClose)
             DELETE_IF_EXIST(m_pMenuSystemMinimizeRect)
-            DELETE_IF_EXIST(m_pMenuSystemMinimizeRect)
+            DELETE_IF_EXIST(m_pMenuSystemCloseRect)
             if (m_pMenuImage)
             {
                 SDL_DestroyTexture(m_pMenuImage);
             }
         }
 
-        void setMousePosition(const SDL_Point mousePoint) {
-            m_sMousePosition = mousePoint;
-        }
 
         int getViewIndex()const {
             return m_iViewIndex;
@@ -51,7 +48,6 @@ namespace CellularNetworkDemonstration {
     private:
         // 属性
         int m_iViewIndex;
-        SDL_Point m_sMousePosition;
 
         // 资源
         SDL_Texture *m_pMenuImage;
@@ -64,9 +60,9 @@ namespace CellularNetworkDemonstration {
         SDL_Rect *m_pMenuSystemMinimizeRect;
 
         // 绘制界面元素
-        virtual void renderUI() {
-            m_pMenuSystemCloseRect->x = m_sMousePosition.x - m_pMenuSystemCloseRect->w/2;
-            m_pMenuSystemCloseRect->y = m_sMousePosition.y - m_pMenuSystemCloseRect->h / 2;
+        virtual void doRender() {
+            //m_pMenuSystemCloseRect->x = m_sMousePosition.x - m_pMenuSystemCloseRect->w/2;
+            //m_pMenuSystemCloseRect->y = m_sMousePosition.y - m_pMenuSystemCloseRect->h / 2;
 
             SDL_SetRenderDrawColor(m_pRenderer, 20, 120, 220, 255);
             SDL_RenderClear(m_pRenderer);
@@ -75,6 +71,21 @@ namespace CellularNetworkDemonstration {
             SDL_Texture *minimizeTexture = m_pMenuSystemMinimize->render();
             SDL_RenderCopy(m_pRenderer, closeTexture, m_pMenuSystemClose->Rect(), m_pMenuSystemCloseRect);
             SDL_RenderCopy(m_pRenderer, minimizeTexture, m_pMenuSystemMinimize->Rect(), m_pMenuSystemMinimizeRect);
+        }
+
+        virtual void doUpdate() {
+            if (SDL_PointInRect(m_sMousePosition, *m_pMenuSystemCloseRect)) {
+                m_pMenuSystemClose->update(SDL_RelationPoint(&m_sMousePosition, m_pMenuSystemCloseRect));
+            } else {
+                m_pMenuSystemClose->update(SDL_Point{ -1, -1 });
+            }
+
+
+            if (SDL_PointInRect(m_sMousePosition, *m_pMenuSystemMinimizeRect)) {
+                m_pMenuSystemMinimize->update(SDL_RelationPoint(&m_sMousePosition, m_pMenuSystemMinimizeRect));
+            } else {
+                m_pMenuSystemMinimize->update(SDL_Point{ -1, -1 });
+            }
         }
     };
 }

@@ -27,7 +27,7 @@ namespace CellularNetworkDemonstration {
         
 
         // 绘制界面元素
-        virtual void renderUI() {
+        virtual void doRender() {
             SDL_SetRenderDrawColor(m_pRenderer, getContiniousValue(4023), getContiniousValue(6732), getContiniousValue(9114), getContiniousValue(7333));
             SDL_RenderClear(m_pRenderer);
         }

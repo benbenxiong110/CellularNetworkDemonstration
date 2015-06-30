@@ -1,8 +1,6 @@
 #pragma once
 #include "Include.h"
 
-#define DELETE_IF_EXIST(POINTER) if(POINTER){delete (POINTER);}
-
 namespace CellularNetworkDemonstration {
     class UIBase {
     public:
@@ -19,7 +17,7 @@ namespace CellularNetworkDemonstration {
             // 设置渲染器，进行当前界面元素的绘制
             SDL_SetRenderTarget(m_pRenderer, m_pTexture);
             // 实际进行绘制
-            renderUI();
+            doRender();
             SDL_RenderPresent(m_pRenderer);
 
             // 恢复渲染器状态
@@ -33,18 +31,27 @@ namespace CellularNetworkDemonstration {
             return m_pRect;
         }
 
-        int getWidth() const{
+        int getWidth() const {
             return m_pRect->w;
         }
         int getHeight() const {
             return m_pRect->h;
-
         }
+
+        void update(const SDL_Point mousePoint = {-1,-1}) {
+            m_sMousePosition = mousePoint;
+            doUpdate();
+        }
+
     protected:
         SDL_Renderer *m_pRenderer;
         SDL_Texture *m_pTexture;
         SDL_Rect *m_pRect;
-        virtual void renderUI() = 0;
+        SDL_Point m_sMousePosition;
+        virtual void doRender() = 0;
+        virtual void doUpdate(){
+            // Null for default
+        }
     };
 
 }

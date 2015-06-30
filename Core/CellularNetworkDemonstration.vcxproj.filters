@@ -97,6 +97,15 @@
     <ClInclude Include="StdInclude.h">
       <Filter>Main\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="ButtonBase.h">
+      <Filter>Main\UI Component\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuViewSelector.h">
+      <Filter>Main\UI Component\MenuPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuViewSelectorHub.h">
+      <Filter>Main\UI Component\MenuPanel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="menubar.png">
