@@ -6,13 +6,13 @@ namespace CellularNetworkDemonstration {
     public:
         ViewAbout(SDL_Renderer* renderer, int viewCode)
             :ViewBase(renderer, viewCode) {
-            m_pWelcomeImage = IMG_LoadTexture(m_pRenderer, "menubar.png");
+            m_pAboutImage = IMG_LoadTexture(m_pRenderer, "view-about.png");
 
         }
 
         ~ViewAbout() {
-            if (m_pWelcomeImage) {
-                SDL_DestroyTexture(m_pWelcomeImage);
+            if (m_pAboutImage) {
+                SDL_DestroyTexture(m_pAboutImage);
             }
         }
 
@@ -20,7 +20,7 @@ namespace CellularNetworkDemonstration {
         // 属性
 
         // 资源
-        SDL_Texture *m_pWelcomeImage;
+        SDL_Texture *m_pAboutImage;
 
         // 子元素
 
@@ -32,7 +32,7 @@ namespace CellularNetworkDemonstration {
             SDL_SetRenderDrawColor_DefalutBackground(m_pRenderer);
             SDL_RenderClear(m_pRenderer);
 
-            SDL_RenderCopy(m_pRenderer, m_pWelcomeImage, nullptr, nullptr);
+            SDL_RenderCopy(m_pRenderer, m_pAboutImage, nullptr, nullptr);
 
             /*SDL_Texture *closeTexture = m_pMenuSystemClose->render();
             SDL_Texture *minimizeTexture = m_pMenuSystemMinimize->render();

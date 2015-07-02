@@ -138,5 +138,17 @@
     <Image Include="menubar.png">
       <Filter>Res</Filter>
     </Image>
+    <Image Include="view-about.png">
+      <Filter>Res</Filter>
+    </Image>
+    <Image Include="view-demonstration.png">
+      <Filter>Res</Filter>
+    </Image>
+    <Image Include="view-introduce.png">
+      <Filter>Res</Filter>
+    </Image>
+    <Image Include="view-welcome.png">
+      <Filter>Res</Filter>
+    </Image>
   </ItemGroup>
 </Project>

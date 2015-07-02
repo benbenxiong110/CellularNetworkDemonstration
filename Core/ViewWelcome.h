@@ -2,15 +2,15 @@
 #include "ViewBase.h"
 
 namespace CellularNetworkDemonstration {
-    class ViewIntroduce:public ViewBase {
+    class ViewWelcome:public ViewBase {
     public:
-        ViewIntroduce(SDL_Renderer* renderer,int viewCode)
+        ViewWelcome(SDL_Renderer* renderer,int viewCode)
             :ViewBase(renderer,viewCode) {
-            m_pWelcomeImage = IMG_LoadTexture(m_pRenderer, "menubar.png");
+            m_pWelcomeImage = IMG_LoadTexture(m_pRenderer, "view-welcome.png");
 
         }
 
-        ~ViewIntroduce() {
+        ~ViewWelcome() {
             if (m_pWelcomeImage) {
                 SDL_DestroyTexture(m_pWelcomeImage);
             }
