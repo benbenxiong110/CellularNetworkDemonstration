@@ -115,7 +115,7 @@ namespace CellularNetworkDemonstration {
             } else {
 
             }
-            m_pViewPanel->setViewIndex(m_pMenuPanel->getViewCode());
+            m_pViewPanel->setViewCode(m_pMenuPanel->getViewCode());
         }
 
         // 处理事件

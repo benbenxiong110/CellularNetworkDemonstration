@@ -92,7 +92,7 @@ namespace CellularNetworkDemonstration {
             SDL_SetRenderDrawColor(m_pRenderer, 250, 30, 30, 0);// getRenderAlpha());
             SDL_RenderClear(m_pRenderer);
             SDL_RenderCopy(m_pRenderer, m_pCaptionText, nullptr, m_pCaptionPosition);
-            if (m_bActive || m_pState == BUTTON_STATE_HOVER) {
+            if (m_bActive || m_pState == BUTTON_STATE_HOVER || m_pState == BUTTON_STATE_DOWN) {
                 SDL_RenderCopy(m_pRenderer, m_pUnderLine, nullptr, m_pUnderLinePosition);
 
             }

@@ -3,7 +3,7 @@
 #include "UIBase.h"
 
 namespace CellularNetworkDemonstration {
-    class ButtonBase:public UIBase {
+    class ButtonBase :public UIBase {
     public:
         // 
         ButtonBase(SDL_Renderer *renderer, int width, int height) :
@@ -12,7 +12,8 @@ namespace CellularNetworkDemonstration {
             m_pState = BUTTON_STATE_NORMAL;
 
         }
-        virtual ~ButtonBase() { }
+        virtual ~ButtonBase() {
+        }
 
     protected:
         enum buttonState {
@@ -31,9 +32,8 @@ namespace CellularNetworkDemonstration {
                 } else {
                     if (m_pState == BUTTON_STATE_DOWN) {
                         doAction();
-                    } else {
-                        m_pState = BUTTON_STATE_HOVER;
                     }
+                    m_pState = BUTTON_STATE_HOVER;
                 }
             } else {
                 m_pState = BUTTON_STATE_NORMAL;

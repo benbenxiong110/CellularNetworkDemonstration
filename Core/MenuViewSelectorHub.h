@@ -71,7 +71,6 @@ namespace CellularNetworkDemonstration {
             SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 0);
             SDL_RenderClear(m_pRenderer);
             for (int i = 0; i < 4; i++) {
-
                 SDL_Texture *texture = m_pViewSelectors[i]->render();
                 SDL_RenderCopy(m_pRenderer, texture, m_pViewSelectors[i]->Rect(), m_pViewSelectorRects[i]);
             }

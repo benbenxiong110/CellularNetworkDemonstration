@@ -62,13 +62,18 @@ namespace CellularNetworkDemonstration {
         SDL_Color *color = nullptr,
         TTF_FontFamilySeries fontFamily = TTF_FONT_DEFAULT);
 
+
+    SDL_FORCE_INLINE void SDL_SetRenderDrawColor_DefalutBackground(SDL_Renderer *renderer) {
+        SDL_SetRenderDrawColor(renderer, 235, 235, 235, 255);
+    }
+
     // 最小化事件
     static const int SDL_MINIMIZE = 0x00000001;
 
     // 页面切换事件
     static const int SDL_CHANGEVIEW = 0x00000100;
     static const int SDL_CHANGEVIEW_01 = 0x00000101;
-    static const int SDL_CHANGEVIEW_02 = 0x00000101;
-    static const int SDL_CHANGEVIEW_03 = 0x00000101;
-    static const int SDL_CHANGEVIEW_04 = 0x00000101;
+    static const int SDL_CHANGEVIEW_02 = 0x00000102;
+    static const int SDL_CHANGEVIEW_03 = 0x00000103;
+    static const int SDL_CHANGEVIEW_04 = 0x00000104;
 }

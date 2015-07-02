@@ -92,6 +92,7 @@
     <ClCompile Include="MenuPanel.cpp" />
     <ClCompile Include="MouseManager.cpp" />
     <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="ViewBase.cpp" />
     <ClCompile Include="ViewPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -108,7 +109,12 @@
     <ClInclude Include="StdInclude.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="UIRefresh.h" />
+    <ClInclude Include="ViewAbout.h" />
+    <ClInclude Include="ViewBase.h" />
+    <ClInclude Include="ViewDemonstration.h" />
+    <ClInclude Include="ViewIntroduce.h" />
     <ClInclude Include="ViewPanel.h" />
+    <ClInclude Include="ViewWelcome.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="menubar.png" />
