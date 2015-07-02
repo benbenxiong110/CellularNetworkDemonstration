@@ -3,7 +3,7 @@
 namespace CellularNetworkDemonstration {
     UIBase::UIBase(SDL_Renderer *renderer, int width, int height) {
         m_pRenderer = renderer;
-        m_pTexture = SDL_CreateTexture(m_pRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 800, 150);
+        m_pTexture = SDL_CreateTexture(m_pRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height);
         SDL_SetTextureBlendMode(m_pTexture, SDL_BLENDMODE_BLEND);
         m_pRect = new SDL_Rect;
 

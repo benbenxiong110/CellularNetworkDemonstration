@@ -98,6 +98,9 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="ButtonBase.h" />
+    <ClInclude Include="DemoMap.h" />
+    <ClInclude Include="DemoNotification.h" />
+    <ClInclude Include="DemoSidebar.h" />
     <ClInclude Include="Extends.h" />
     <ClInclude Include="Include.h" />
     <ClInclude Include="MenuPanel.h" />

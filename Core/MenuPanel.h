@@ -1,12 +1,13 @@
 #pragma once
-#include "Include.h"
 #include "UIBase.h"
+
 #include "MenuSystemClose.h"
 #include "MenuSystemMinimize.h"
 #include "MenuViewSelectorHub.h"
 namespace CellularNetworkDemonstration {
 
-    class MenuPanel :public UIBase {
+    class MenuPanel 
+        :public UIBase {
     public:
         MenuPanel(SDL_Renderer *renderer)
             :UIBase(renderer, 800, 150) {

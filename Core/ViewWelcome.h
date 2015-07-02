@@ -7,7 +7,7 @@ namespace CellularNetworkDemonstration {
         ViewWelcome(SDL_Renderer* renderer,int viewCode)
             :ViewBase(renderer,viewCode) {
             m_pWelcomeImage = IMG_LoadTexture(m_pRenderer, "view-welcome.png");
-
+            SDL_SetTextureBlendMode(m_pWelcomeImage, SDL_BLENDMODE_BLEND);
         }
 
         ~ViewWelcome() {

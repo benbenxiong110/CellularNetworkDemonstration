@@ -133,6 +133,15 @@
     <ClInclude Include="ViewWelcome.h">
       <Filter>Main\UI Component\ViewPanel</Filter>
     </ClInclude>
+    <ClInclude Include="DemoSidebar.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoMap.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoNotification.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="menubar.png">

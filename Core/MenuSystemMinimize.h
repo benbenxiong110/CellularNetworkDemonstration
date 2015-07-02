@@ -12,7 +12,7 @@ namespace CellularNetworkDemonstration {
             SDL_GetRenderDrawColor(m_pRenderer, &r, &g, &b, &a);
 
 
-            m_pMinimizeIcon = SDL_CreateTexture(renderer,
+            m_pMinimizeIcon = SDL_CreateTexture(m_pRenderer,
                 SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 11, 10);
             SDL_SetTextureBlendMode(m_pMinimizeIcon, SDL_BLENDMODE_BLEND);
             SDL_SetRenderTarget(m_pRenderer, m_pMinimizeIcon);

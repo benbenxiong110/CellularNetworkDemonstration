@@ -8,8 +8,8 @@
 #include "ViewAbout.h"
 
 namespace CellularNetworkDemonstration {
-    class ViewPanel :
-        public UIBase {
+    class ViewPanel 
+        :public UIBase {
     public:
         ViewPanel(SDL_Renderer *renderer)
             :UIBase(renderer, 800, 450) {
@@ -51,11 +51,11 @@ namespace CellularNetworkDemonstration {
 
         // 绘制界面元素
         virtual void doRender() {
-            
             SDL_Texture* currentView = m_pViews[m_iViewIndex]->render();
             //SDL_SetRenderDrawColor(m_pRenderer, getContiniousValue(4023), getContiniousValue(6732), getContiniousValue(9114), getContiniousValue(7333));
+            //SDL_SetRenderDrawColor_DefalutBackground(m_pRenderer);
             SDL_RenderClear(m_pRenderer);
-            SDL_RenderCopy(m_pRenderer, currentView, NULL, NULL);
+            SDL_RenderCopy(m_pRenderer, currentView, m_pViews[m_iViewIndex]->Rect(), NULL);
         }
 
         inline int getContiniousValue(int interval) {

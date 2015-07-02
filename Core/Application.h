@@ -5,7 +5,7 @@
 
 namespace CellularNetworkDemonstration {
 
-    const static char* ApplaicationName = "Cellular Network Demo";
+    const static char* ApplaicationName = "Cellular Network Demonstration";
 
     class Application {
     public:
@@ -28,8 +28,8 @@ namespace CellularNetworkDemonstration {
 
             // 建立窗口
             SDL_log("建立窗口");
-            m_pWindow = SDL_CreateWindow(ApplaicationName, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                800, 600, SDL_WINDOW_BORDERLESS);
+            m_pWindow = SDL_CreateWindow(ApplaicationName, SDL_WINDOWPOS_CENTERED, 
+                SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_BORDERLESS);
             if (m_pWindow == nullptr) {
                 return false;
             }
@@ -41,7 +41,7 @@ namespace CellularNetworkDemonstration {
                 return false;
             }
             // 设置渲染器颜色
-            SDL_SetRenderDrawColor(m_pRenderer, 210, 210, 210, 255);
+            SDL_SetRenderDrawColor_DefalutBackground(m_pRenderer);
 
 
             SDL_log("初始化组件...");
