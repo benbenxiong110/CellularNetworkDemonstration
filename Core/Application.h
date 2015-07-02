@@ -115,7 +115,7 @@ namespace CellularNetworkDemonstration {
             } else {
 
             }
-            m_pViewPanel->setViewIndex(m_pMenuPanel->getViewIndex());
+            m_pViewPanel->setViewIndex(m_pMenuPanel->getViewCode());
         }
 
         // 处理事件
@@ -132,10 +132,14 @@ namespace CellularNetworkDemonstration {
                         m_bRunning = false;
                         break;
                     case SDL_USEREVENT:
-                        SDL_log("最小化窗体");
                         if (event.user.code == SDL_MINIMIZE) {
+                        SDL_log("最小化窗体");
                             m_bMinimized = true;
                             SDL_MinimizeWindow(m_pWindow);
+                        }
+                        if (event.user.code & SDL_CHANGEVIEW) {
+                            // Use bitwise operation to set catalog
+                            m_pMenuPanel->setViewCode(event.user.code);
                         }
                         break;
                     case SDL_MOUSEBUTTONUP:

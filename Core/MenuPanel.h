@@ -53,12 +53,14 @@ namespace CellularNetworkDemonstration {
         }
 
 
-        int getViewIndex()const {
-            return m_iViewIndex;
+        int getViewCode()const {
+            return this->m_pMenuViewSelectorHub->getViewIndex();
+        }
+        void setViewCode(int indexCode) {
+            this->m_pMenuViewSelectorHub->setViewIndex(indexCode);
         }
     private:
         //  Ù–‘
-        int m_iViewIndex;
 
         // ◊ ‘¥
         SDL_Texture *m_pMenuImage;

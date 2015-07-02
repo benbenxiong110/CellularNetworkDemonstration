@@ -5,9 +5,9 @@
 namespace CellularNetworkDemonstration {
     class MenuViewSelector : public ButtonBase {
     public:
-        MenuViewSelector(SDL_Renderer *renderer, const char* Caption)
-        :ButtonBase(renderer, 70, 30){
-
+        MenuViewSelector(SDL_Renderer *renderer, const char* Caption, const int Code)
+        :ButtonBase(renderer, 70, 30),m_iSelectorCode(Code){
+            this->m_bActive = false;
 
             SDL_Texture* origTarget = SDL_GetRenderTarget(m_pRenderer);
             Uint8 r, g, b, a;
@@ -55,28 +55,44 @@ namespace CellularNetworkDemonstration {
             DELETE_IF_EXIST(m_pCaptionPosition)
         }
 
-        void Active() {
-            this->active = true;
+        void active() {
+            this->m_bActive = true;
         }
 
-        void Deactive() {
-            this->active = false;
+        void deactive() {
+            this->m_bActive = false;
         }
 
+        void setActive(bool active) {
+            this->m_bActive = active;
+        }
+
+        void toggleActive() {
+            this->m_bActive = !this->m_bActive;
+        }
+
+        bool isActive() const{
+            return this->m_bActive;
+        }
+
+        int getSelectorCode() const {
+            return this->m_iSelectorCode;
+        }
     private:
         SDL_Texture *m_pCaptionText;
         SDL_Rect *m_pCaptionPosition;
         SDL_Texture *m_pUnderLine;
         SDL_Rect *m_pUnderLinePosition;
 
-        bool active;
+        bool m_bActive;
+        const int m_iSelectorCode;
 
         // 绘制界面元素
         virtual void doRender() {
             SDL_SetRenderDrawColor(m_pRenderer, 250, 30, 30, 0);// getRenderAlpha());
             SDL_RenderClear(m_pRenderer);
             SDL_RenderCopy(m_pRenderer, m_pCaptionText, nullptr, m_pCaptionPosition);
-            if (m_pState == BUTTON_STATE_HOVER) {
+            if (m_bActive || m_pState == BUTTON_STATE_HOVER) {
                 SDL_RenderCopy(m_pRenderer, m_pUnderLine, nullptr, m_pUnderLinePosition);
 
             }
@@ -123,9 +139,10 @@ namespace CellularNetworkDemonstration {
         }
 
         virtual void doAction() {
-            SDL_Event* quit = new SDL_Event;
-            quit->quit.type = SDL_QUIT;
-            SDL_PushEvent(quit);
+            SDL_Event* select = new SDL_Event;
+            select->type = SDL_USEREVENT;
+            select->user.code = m_iSelectorCode;
+            SDL_PushEvent(select);
         }
     };
 }
