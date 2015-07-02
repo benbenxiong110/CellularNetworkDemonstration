@@ -15,30 +15,36 @@ namespace CellularNetworkDemonstration {
         // 程序初始化
         bool init() {
             // 初始化程序
-            log("初始化程序...");
-            if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
-                // 建立窗口
-                log("建立窗口");
-                m_pWindow = SDL_CreateWindow(ApplaicationName, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                    800, 600, SDL_WINDOW_BORDERLESS);
-                if (m_pWindow != 0) {
-                    // 建立渲染器
-                    m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
-                    SDL_SetRenderDrawBlendMode(m_pRenderer, SDL_BLENDMODE_BLEND);
-                    if (m_pRenderer != 0) {
-                        // 设置渲染器颜色
-                        SDL_SetRenderDrawColor(m_pRenderer,
-                            210, 210, 210, 255);
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            } else {
+            SDL_log("初始化程序...");
+            if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
                 return false;
             }
-            log("初始化组件...");
+
+
+            // 初始化 TTF 库
+            if (TTF_Init() != 0) {
+                return false;
+            }
+
+            // 建立窗口
+            SDL_log("建立窗口");
+            m_pWindow = SDL_CreateWindow(ApplaicationName, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                800, 600, SDL_WINDOW_BORDERLESS);
+            if (m_pWindow == nullptr) {
+                return false;
+            }
+
+            // 建立渲染器
+            m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
+            SDL_SetRenderDrawBlendMode(m_pRenderer, SDL_BLENDMODE_BLEND);
+            if (m_pRenderer == nullptr) {
+                return false;
+            }
+            // 设置渲染器颜色
+            SDL_SetRenderDrawColor(m_pRenderer, 210, 210, 210, 255);
+
+
+            SDL_log("初始化组件...");
             // 初始化菜单区域
             m_pMenuPanel = new MenuPanel(m_pRenderer);
             m_pMenuPanelRect = new SDL_Rect();
@@ -55,7 +61,7 @@ namespace CellularNetworkDemonstration {
             m_pViewPanelRect->w = 800;
             m_pViewPanelRect->h = 450;
 
-            log("初始化完成");
+            SDL_log("初始化完成");
             m_bRunning = true;
             return true;
         }
@@ -71,8 +77,8 @@ namespace CellularNetworkDemonstration {
             // SDL_Delay(20);
             if (now - last > 1000 / 60) {
                 if (now - last > 100) {
-                    log("Low Performance!!!");
-                    log(now - last);
+                    SDL_log("Low Performance!!!");
+                    SDL_log(now - last);
                 }
                 last = now;
 
@@ -118,7 +124,7 @@ namespace CellularNetworkDemonstration {
             SDL_Event event;
             if (minimized()) {
                 SDL_WaitEvent(nullptr);
-            } 
+            }
             if (SDL_PollEvent(&event)) {
                 switch (event.type) {
                     case SDL_QUIT:
@@ -126,7 +132,7 @@ namespace CellularNetworkDemonstration {
                         m_bRunning = false;
                         break;
                     case SDL_USEREVENT:
-                        log("最小化窗体");
+                        SDL_log("最小化窗体");
                         if (event.user.code == SDL_MINIMIZE) {
                             m_bMinimized = true;
                             SDL_MinimizeWindow(m_pWindow);
@@ -139,7 +145,7 @@ namespace CellularNetworkDemonstration {
                     case SDL_WINDOWEVENT:
                         switch (event.window.event) {
                             case SDL_WINDOWEVENT_RESTORED:
-                                log("恢复窗体");
+                                SDL_log("恢复窗体");
                                 if (m_bMinimized) {
                                     SDL_RestoreWindow(m_pWindow);
                                     m_bMinimized = false;
@@ -177,6 +183,7 @@ namespace CellularNetworkDemonstration {
 
             SDL_DestroyWindow(m_pWindow);
             SDL_DestroyRenderer(m_pRenderer);
+            TTF_Quit();
             SDL_Quit();
         }
 

@@ -5,6 +5,7 @@
 namespace CellularNetworkDemonstration {
     class ButtonBase:public UIBase {
     public:
+        // 
         ButtonBase(SDL_Renderer *renderer, int width, int height) :
             UIBase(renderer, width, height) {
             //初始化子元素

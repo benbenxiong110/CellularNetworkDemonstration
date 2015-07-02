@@ -17,6 +17,9 @@
     <ClCompile Include="MouseManager.cpp">
       <Filter>Main\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Extends.cpp">
+      <Filter>Main\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Lib">
@@ -63,9 +66,6 @@
   <ItemGroup>
     <ClInclude Include="Application.h">
       <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="Console.h">
-      <Filter>Main\Tools</Filter>
     </ClInclude>
     <ClInclude Include="MenuPanel.h">
       <Filter>Main\UI Component</Filter>
