@@ -1,5 +1,6 @@
 #pragma once
 #include "UIBase.h"
+#include "DemoHexagon.h"
 
 namespace CellularNetworkDemonstration {
     class DemoMap : public UIBase {
@@ -16,12 +17,14 @@ namespace CellularNetworkDemonstration {
             //m_pMenuSystemCloseRect->y = 0;
             //m_pMenuSystemCloseRect->w = 45;
             //m_pMenuSystemCloseRect->h = 20;
-
+            SDL_Color color = { 255, 255, 20, 100 };
+            hexagon = new DemoHexagon(renderer, &color);
 
         }
 
         ~DemoMap() {
             // 清理子元素和资源
+            DELETE_IF_EXIST(hexagon);
 
             //DELETE_IF_EXIST(m_pMenuSystemMinimize)
             //    if (m_pMenuImage) {
@@ -39,13 +42,22 @@ namespace CellularNetworkDemonstration {
         // 子元素
         //MenuSystemClose *m_pMenuSystemClose;
         //SDL_Rect *m_pMenuSystemCloseRect;
-
+        DemoHexagon *hexagon;
 
         // 绘制界面元素
         virtual void doRender() {
             SDL_SetRenderDrawColor(m_pRenderer, 20, 220, 120, 255);
             SDL_RenderClear(m_pRenderer);
-            
+            SDL_Texture *hexagonTexture = hexagon->render();
+            SDL_Rect r = { 0, 0, 200, 200 };
+            for (int i = 0; i < 5; i++) {
+                r.y = 150 * i - 100;
+                for (int j = 0; j < 5; j++) {
+                    r.x = -( i % 2 == 0 ? 100 : 14 ) + j * 172;
+                    SDL_RenderCopy(m_pRenderer, hexagonTexture, nullptr, &r);
+
+                }
+            }
         }
 
         virtual void doUpdate() {

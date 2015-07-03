@@ -6,7 +6,7 @@ namespace CellularNetworkDemonstration {
     class MenuViewSelector : public ButtonBase {
     public:
         MenuViewSelector(SDL_Renderer *renderer, const char* Caption, const int Code)
-        :ButtonBase(renderer, 70, 30),m_iSelectorCode(Code){
+            :ButtonBase(renderer, 70, 30), m_iSelectorCode(Code) {
             this->m_bActive = false;
 
             SDL_Texture* origTarget = SDL_GetRenderTarget(m_pRenderer);
@@ -28,7 +28,7 @@ namespace CellularNetworkDemonstration {
             SDL_RenderDrawPoint(m_pRenderer, 0, 2);
             SDL_RenderPresent(renderer);
 
-            m_pUnderLinePosition = new SDL_Rect{0,25,70,5 };
+            m_pUnderLinePosition = new SDL_Rect{ 0, 25, 70, 5 };
 
             m_pCaptionText = TTF_RenderTextTexture(m_pRenderer, Caption, 21);
             m_pCaptionPosition = new SDL_Rect;
@@ -60,7 +60,12 @@ namespace CellularNetworkDemonstration {
         }
 
         void deactive() {
-            this->m_bActive = false;
+            if (m_bActive) {
+                this->m_bActive = false;
+                this->percent = 100;
+                this->lastTick = SDL_GetTicks();
+
+            }
         }
 
         void setActive(bool active) {
@@ -68,10 +73,14 @@ namespace CellularNetworkDemonstration {
         }
 
         void toggleActive() {
-            this->m_bActive = !this->m_bActive;
+            if (m_bActive) {
+                active();
+            } else {
+                deactive();
+            }
         }
 
-        bool isActive() const{
+        bool isActive() const {
             return this->m_bActive;
         }
 
@@ -89,53 +98,60 @@ namespace CellularNetworkDemonstration {
 
         // 绘制界面元素
         virtual void doRender() {
-            SDL_SetRenderDrawColor(m_pRenderer, 250, 30, 30, 0);// getRenderAlpha());
+            //SDL_SetRenderDrawColor(m_pRenderer, 250, 30, 30, 0);// getRenderAlpha());
             SDL_RenderClear(m_pRenderer);
             SDL_RenderCopy(m_pRenderer, m_pCaptionText, nullptr, m_pCaptionPosition);
-            if (m_bActive || m_pState == BUTTON_STATE_HOVER || m_pState == BUTTON_STATE_DOWN) {
+            if (m_bActive || m_pState == BUTTON_STATE_DOWN) {
+                m_pUnderLinePosition->x = 0;
+                m_pUnderLinePosition->w = 70;
                 SDL_RenderCopy(m_pRenderer, m_pUnderLine, nullptr, m_pUnderLinePosition);
-
+            } else if (m_pState == BUTTON_STATE_HOVER) {
+                m_pUnderLinePosition->w = 2 * getRenderValue(true);
+                m_pUnderLinePosition->x = 35 - m_pUnderLinePosition->w / 2;
+                SDL_RenderCopy(m_pRenderer, m_pUnderLine, nullptr, m_pUnderLinePosition);
+            } else {
+                m_pUnderLinePosition->w = 2 * getRenderValue(false);
+                m_pUnderLinePosition->x = 35 - m_pUnderLinePosition->w / 2;
+                if (m_pUnderLinePosition->x < 35) {
+                    SDL_RenderCopy(m_pRenderer, m_pUnderLine, nullptr, m_pUnderLinePosition);
+                }
             }
         }
 
+        int percent = 0;
+        int lastTick = 0;
         // 背景混合动画
-        int getRenderAlpha() {
-            const static int IN_DURATION = 200 / 100;//Divided by 100 percents
-            const static int OUT_DURATION = 400 / 100;//Divided by 100 percents
-            static int percent = 0;
-            static int lastTick = 0;
-            static int currentTick;
+        int getRenderValue(bool wider) {
+            const static int IN_DURATION = 150 / 100;//Divided by 100 percents
+            const static int OUT_DURATION = 300 / 100;//Divided by 100 percents
 
-            currentTick = SDL_GetTicks();
+            int currentTick = SDL_GetTicks();
 
-            int alpha, delta;
-            switch (m_pState) {
-                case BUTTON_STATE_NORMAL:
-                    delta = ( currentTick - lastTick ) / OUT_DURATION;
-                    percent -= delta;
-                    if (percent < 0) {
-                        percent = 0;
-                    }
-                    // 缓动曲线设置为正弦
-                    alpha = 120 + SDL_static_cast(int, ( 220 - 120 ) * SDL_sin(percent / 100.0));
-                    break;
-                case BUTTON_STATE_HOVER:
+            int width, delta;
+            if (wider) {
+                width = 35;
+                if (percent != 100) {
                     delta = ( currentTick - lastTick ) / IN_DURATION;
                     percent += delta;
                     if (percent > 100) {
                         percent = 100;
                     }
-                    // 缓动曲线设置为正弦
-                    alpha = 120 + SDL_static_cast(int, ( 220 - 120 ) * SDL_sin(percent / 100.0));
-                    break;
-                case BUTTON_STATE_DOWN:
-                    alpha = 255;
-                    break;
-                default:
-                    break;
+                    width = 35 * SDL_sin(percent / 100.0);
+                }
+            } else {
+                width = 0;
+                if (percent != 0) {
+                    delta = ( currentTick - lastTick ) / OUT_DURATION;
+                    percent -= delta;
+                    if (percent < 0) {
+                        percent = 0;
+                    }
+                    width = 35 * SDL_sin(percent / 100.0);
+                }
             }
             lastTick = currentTick;
-            return alpha;
+            SDL_log(width);
+            return width;
         }
 
         virtual void doAction() {

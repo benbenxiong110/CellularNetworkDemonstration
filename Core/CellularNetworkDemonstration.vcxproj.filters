@@ -74,6 +74,15 @@
     <Filter Include="Main\UI Component\ViewPanel\AboutView">
       <UniqueIdentifier>{758345cf-a1b3-482a-9c6a-b03dac4940bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Main\UI Component\ViewPanel\DemonstrationView\MainClass">
+      <UniqueIdentifier>{4c25b4e6-6d15-437c-a590-dbd3616b578a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\UI Component\ViewPanel\DemonstrationView\MainClass\Item">
+      <UniqueIdentifier>{67450e7d-6802-4ae4-b28b-92418699115b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\UI Component\ViewPanel\DemonstrationView\MainClass\Client">
+      <UniqueIdentifier>{9128d12a-bf73-49a1-8076-b4b07014a436}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -142,6 +151,33 @@
     <ClInclude Include="DemoNotification.h">
       <Filter>Main\UI Component\ViewPanel\DemonstrationView</Filter>
     </ClInclude>
+    <ClInclude Include="DemoHexagon.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView</Filter>
+    </ClInclude>
+    <ClInclude Include="MainBaseStation.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView\MainClass</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMobileClient.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView\MainClass</Filter>
+    </ClInclude>
+    <ClInclude Include="MainScreen.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView\MainClass\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="MainChip.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView\MainClass\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="MainKeyboard.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView\MainClass\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="MainPDA.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView\MainClass\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMobilePhone.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView\MainClass\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="MainLaptop.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView\MainClass\Client</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="menubar.png">
@@ -157,6 +193,9 @@
       <Filter>Res</Filter>
     </Image>
     <Image Include="view-welcome.png">
+      <Filter>Res</Filter>
+    </Image>
+    <Image Include="Hexagon.png">
       <Filter>Res</Filter>
     </Image>
   </ItemGroup>

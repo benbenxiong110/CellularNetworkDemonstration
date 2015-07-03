@@ -62,6 +62,8 @@ namespace CellularNetworkDemonstration {
         SDL_Color *color = nullptr,
         TTF_FontFamilySeries fontFamily = TTF_FONT_DEFAULT);
 
+   
+
 
     SDL_FORCE_INLINE void SDL_SetRenderDrawColor_DefalutBackground(SDL_Renderer *renderer) {
         SDL_SetRenderDrawColor(renderer, 235, 235, 235, 255);

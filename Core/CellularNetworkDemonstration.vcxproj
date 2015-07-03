@@ -98,11 +98,20 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="ButtonBase.h" />
+    <ClInclude Include="DemoHexagon.h" />
     <ClInclude Include="DemoMap.h" />
     <ClInclude Include="DemoNotification.h" />
     <ClInclude Include="DemoSidebar.h" />
     <ClInclude Include="Extends.h" />
     <ClInclude Include="Include.h" />
+    <ClInclude Include="MainBaseStation.h" />
+    <ClInclude Include="MainChip.h" />
+    <ClInclude Include="MainKeyboard.h" />
+    <ClInclude Include="MainLaptop.h" />
+    <ClInclude Include="MainMobileClient.h" />
+    <ClInclude Include="MainMobilePhone.h" />
+    <ClInclude Include="MainPDA.h" />
+    <ClInclude Include="MainScreen.h" />
     <ClInclude Include="MenuPanel.h" />
     <ClInclude Include="MenuSystemClose.h" />
     <ClInclude Include="MenuSystemMinimize.h" />
@@ -120,6 +129,7 @@
     <ClInclude Include="ViewWelcome.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Hexagon.png" />
     <Image Include="menubar.png" />
     <Image Include="view-about.png" />
     <Image Include="view-demonstration.png" />
