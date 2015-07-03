@@ -136,7 +136,7 @@ namespace CellularNetworkDemonstration {
                     if (percent > 100) {
                         percent = 100;
                     }
-                    width = 35 * SDL_sin(percent / 100.0);
+                    width = SDL_static_cast(int, 35 * SDL_sin(percent / 100.0));
                 }
             } else {
                 width = 0;
@@ -146,7 +146,7 @@ namespace CellularNetworkDemonstration {
                     if (percent < 0) {
                         percent = 0;
                     }
-                    width = 35 * SDL_sin(percent / 100.0);
+                    width = SDL_static_cast(int, 35 * SDL_sin(percent / 100.0));
                 }
             }
             lastTick = currentTick;

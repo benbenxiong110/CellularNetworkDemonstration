@@ -17,7 +17,7 @@ namespace CellularNetworkDemonstration {
             SDL_Texture* origTarget = SDL_GetRenderTarget(m_pRenderer);
             Uint8 r, g, b, a;
             SDL_GetRenderDrawColor(m_pRenderer, &r, &g, &b, &a);
-
+            SDL_Texture *temp;
 
             //m_pMinimizeIcon = SDL_CreateTexture(m_pRenderer,
             //    SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 11, 10);
@@ -25,11 +25,9 @@ namespace CellularNetworkDemonstration {
             SDL_SetRenderTarget(m_pRenderer, m_pTexture);
             SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 0);
             SDL_RenderClear(m_pRenderer);
-            SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
-            SDL_RenderDrawLine(renderer, 0, 8, 110, 80);
-            SDL_RenderDrawLine(renderer, 0, 9, 110, 9);
 
             int w, h;
+            SDL_Rect rect;
             SDL_Color color{ 80, 75, 70, 255 };
             // 界面标题
             m_pTitleText = TTF_RenderTextTexture(renderer, "演示元素", 22, &color);
@@ -37,14 +35,43 @@ namespace CellularNetworkDemonstration {
             m_pTitleTextRect = new SDL_Rect{ 10, -5, w, h };
             
             // 基站列表标题
-            m_pBaseStationListTitle = TTF_RenderTextTexture(renderer, "基站", 16, &color);
-            SDL_QueryTexture(m_pBaseStationListTitle, nullptr, nullptr, &w, &h);
-            m_pBaseStationListTitleRect = new SDL_Rect{ 15, 26, w, h };
+            temp = TTF_RenderTextTexture(renderer, "基站", 18, &color);
+            SDL_QueryTexture(temp, nullptr, nullptr, &w, &h);
+            m_pBaseStationListTitle = SDL_CreateTexture(m_pRenderer, 
+                SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 200, 20);
+            SDL_SetTextureBlendMode(m_pBaseStationListTitle, SDL_BLENDMODE_BLEND);
+            SDL_SetRenderTarget(m_pRenderer, m_pBaseStationListTitle);
+            SDL_SetRenderDrawColor(m_pRenderer, 180, 180, 180, 120);
+            SDL_RenderDrawLine(renderer, 5, 6, 190, 6);
+            SDL_RenderDrawLine(renderer, 5, 9, 190, 9);
+            SDL_RenderDrawLine(renderer, 5, 12, 190, 12);
+            rect = { 15, -4, w + 10, h };
+            SDL_SetRenderDrawColor_DefalutBackground(m_pRenderer);
+            SDL_RenderFillRect(m_pRenderer, &rect);
+            rect = { 20, -4, w, h };
+            SDL_RenderCopy(m_pRenderer, temp, nullptr, &rect);
+            SDL_DestroyTexture(temp);
+            m_pBaseStationListTitleRect = new SDL_Rect{ 0, 30, 200, 20 };
+
 
             // 移动台列表标题             
-            m_pMobileClientListTitle = TTF_RenderTextTexture(renderer, "移动台", 16, &color);
-            SDL_QueryTexture(m_pMobileClientListTitle, nullptr, nullptr, &w, &h);
-            m_pMobileClientListTitleRect = new SDL_Rect{ 15, 230, w, h };
+            temp = TTF_RenderTextTexture(renderer, "移动台", 18, &color);
+            SDL_QueryTexture(temp, nullptr, nullptr, &w, &h);
+            m_pMobileClientListTitle = SDL_CreateTexture(m_pRenderer,
+                SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 200, 20);
+            SDL_SetTextureBlendMode(m_pMobileClientListTitle, SDL_BLENDMODE_BLEND);
+            SDL_SetRenderTarget(m_pRenderer, m_pMobileClientListTitle);
+            SDL_SetRenderDrawColor(m_pRenderer, 180, 180, 180, 120);
+            SDL_RenderDrawLine(renderer, 5, 6, 190, 6);
+            SDL_RenderDrawLine(renderer, 5, 9, 190, 9);
+            SDL_RenderDrawLine(renderer, 5, 12, 190, 12);
+            rect = { 15, -4, w + 10, h };
+            SDL_SetRenderDrawColor_DefalutBackground(m_pRenderer);
+            SDL_RenderFillRect(m_pRenderer, &rect);
+            rect = { 20, -4, w, h };
+            SDL_RenderCopy(m_pRenderer, temp, nullptr, &rect);
+            SDL_DestroyTexture(temp);
+            m_pMobileClientListTitleRect = new SDL_Rect{ 0, 230, 200, 20 };
             
             // 恢复渲染器状态
             SDL_SetRenderTarget(m_pRenderer, origTarget);
