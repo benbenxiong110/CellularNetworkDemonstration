@@ -22,6 +22,14 @@ namespace CellularNetworkDemonstration {
                 manager->addBaseStation();
                 manager->addBaseStation();
                 manager->addBaseStation();
+
+                manager->addMobileClient(MAIN_MOBILE_CLIENT_LAPTOP);
+                manager->addMobileClient(MAIN_MOBILE_CLIENT_MOBILE_PHONE);
+                manager->addMobileClient(MAIN_MOBILE_CLIENT_PDA);
+                manager->addMobileClient(MAIN_MOBILE_CLIENT_LAPTOP);
+                manager->addMobileClient(MAIN_MOBILE_CLIENT_MOBILE_PHONE);
+                manager->addMobileClient(MAIN_MOBILE_CLIENT_PDA);
+
             }
             return *manager;
         }
@@ -72,6 +80,10 @@ namespace CellularNetworkDemonstration {
 
         vector<MainBaseStation *>& getBaseStationList() {
             return m_vpBaseStationList;
+        }
+
+        vector<MainMobileClient *>& getMobileClientList() {
+            return m_vpMobileClientList;
         }
 
     private:

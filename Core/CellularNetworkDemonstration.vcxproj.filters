@@ -184,6 +184,9 @@
     <ClInclude Include="DemoDataManager.h">
       <Filter>Main\UI Component\ViewPanel\DemonstrationView</Filter>
     </ClInclude>
+    <ClInclude Include="DemoMobileClientListItem.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="menubar.png">

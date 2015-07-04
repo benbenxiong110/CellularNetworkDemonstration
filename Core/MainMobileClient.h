@@ -30,6 +30,10 @@ namespace CellularNetworkDemonstration {
             return model;
         }
 
+        MainMobileClientType getClientType() const {
+            return clientType;
+        }
+
     protected:
         MainMobileClient(MainMobileClientType cliType, int ID)
             :clientType(cliType), id(ID) {

@@ -2,6 +2,7 @@
 #include "UIBase.h"
 #include "DemoDataManager.h"
 #include "DemoBaseStationListItem.h"
+#include "DemoMobileClientListItem.h"
 
 namespace CellularNetworkDemonstration {
     class DemoSidebar : public UIBase {
@@ -81,6 +82,15 @@ namespace CellularNetworkDemonstration {
 
             }
 
+            vector<MainMobileClient *>& mobileClientList = 
+                DemoDataManager::get().getMobileClientList();
+            for (unsigned int i = 0; i < mobileClientList.size(); i++) {
+                DemoMoblieClientListItem *listItem =
+                    new DemoMoblieClientListItem(m_pRenderer, mobileClientList[i]->getId());
+                m_vpMobileClientList.push_back(listItem);
+
+            }
+
             // »Ö¸´äÖÈ¾Æ÷×´Ì¬
             SDL_SetRenderTarget(m_pRenderer, origTarget);
             SDL_SetRenderDrawColor(m_pRenderer, r, g, b, a);
@@ -122,6 +132,7 @@ namespace CellularNetworkDemonstration {
         SDL_Rect *m_pMobileClientListTitleRect;
 
         vector<DemoBaseStationListItem *> m_vpBaseStationList;
+        vector<DemoMoblieClientListItem *> m_vpMobileClientList;
 
         // ×ÓÔªËØ
         //MenuSystemClose *m_pMenuSystemClose;
@@ -146,6 +157,17 @@ namespace CellularNetworkDemonstration {
                 texture = m_vpBaseStationList[i]->render();
                 SDL_RenderCopy(m_pRenderer, texture, m_vpBaseStationList[i]->Rect(), &rect);
             }
+            
+            rect.x = 5;
+            rect.w = 185;
+            rect.h = 20;
+            for (unsigned int i = 0; i < m_vpMobileClientList.size(); i++) {
+                rect.y = 200 + i * 21;
+                texture = m_vpMobileClientList[i]->render();
+                SDL_RenderCopy(m_pRenderer, texture, m_vpMobileClientList[i]->Rect(), &rect);
+            }
+
+
 
         }
 
@@ -164,7 +186,18 @@ namespace CellularNetworkDemonstration {
                 }
             }
 
-
+            rect.x = 5;
+            rect.w = 185;
+            rect.h = 20;
+            for (unsigned int i = 0; i < m_vpMobileClientList.size(); i++) {
+                rect.y = 200 + i * 21;
+                if (SDL_PointInRect(m_sMousePosition, rect)) {
+                    SDL_log(rect.y);
+                    m_vpMobileClientList[i]->update(SDL_RelationPoint(&m_sMousePosition, &rect));
+                } else {
+                    m_vpMobileClientList[i]->update();
+                }
+            }
         }
     };
 }
