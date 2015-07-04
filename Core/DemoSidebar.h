@@ -71,7 +71,7 @@ namespace CellularNetworkDemonstration {
             SDL_DestroyTexture(temp);
             m_pMobileClientListTitleRect = new SDL_Rect{ 0, 180, 190, 20 };
 
-            // Add Items
+            // 添加基站列表
 
             vector<MainBaseStation *>& baseStationList =
                 DemoDataManager::get().getBaseStationList();
@@ -82,6 +82,7 @@ namespace CellularNetworkDemonstration {
 
             }
 
+            // 添加移动台列表
             vector<MainMobileClient *>& mobileClientList = 
                 DemoDataManager::get().getMobileClientList();
             for (unsigned int i = 0; i < mobileClientList.size(); i++) {
@@ -122,6 +123,7 @@ namespace CellularNetworkDemonstration {
 
     private:
         // 属性
+        bool m_bSwitching = false;
 
         // 资源
         SDL_Texture *m_pTitleText;
@@ -149,6 +151,7 @@ namespace CellularNetworkDemonstration {
             SDL_RenderCopy(m_pRenderer, m_pBaseStationListTitle, nullptr, m_pBaseStationListTitleRect);
             SDL_RenderCopy(m_pRenderer, m_pMobileClientListTitle, nullptr, m_pMobileClientListTitleRect);
 
+            // 绘制基站列表项
             rect.x = 5;
             rect.w = 185;
             rect.h = 20;
@@ -158,6 +161,8 @@ namespace CellularNetworkDemonstration {
                 SDL_RenderCopy(m_pRenderer, texture, m_vpBaseStationList[i]->Rect(), &rect);
             }
             
+
+            // 绘制移动台列表项
             rect.x = 5;
             rect.w = 185;
             rect.h = 20;

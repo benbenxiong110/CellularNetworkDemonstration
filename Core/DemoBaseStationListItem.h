@@ -1,5 +1,6 @@
 #pragma once
 #include "ButtonBase.h"
+#include "DemoTextureManager.h"
 
 namespace CellularNetworkDemonstration {
     class DemoBaseStationListItem :public ButtonBase {
@@ -9,20 +10,8 @@ namespace CellularNetworkDemonstration {
             SDL_Texture* origTarget = SDL_GetRenderTarget(m_pRenderer);
             Uint8 r, g, b, a;
             SDL_GetRenderDrawColor(m_pRenderer, &r, &g, &b, &a);
-
-
-            m_pMinimizeIcon = SDL_CreateTexture(m_pRenderer,
-                SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 11, 10);
-            SDL_SetTextureBlendMode(m_pMinimizeIcon, SDL_BLENDMODE_BLEND);
-            SDL_SetRenderTarget(m_pRenderer, m_pMinimizeIcon);
-            SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 0);
-            SDL_RenderClear(m_pRenderer);
-            SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
-            SDL_RenderDrawLine(renderer, 0, 8, 11, 8);
-            SDL_RenderDrawLine(renderer, 0, 9, 11, 9);
-            SDL_RenderPresent(m_pRenderer);
-            m_pMinimizeIconPosition = new SDL_Rect{ 17, 5, 11, 10 };
-
+            m_pBaseStationIconPosition = new SDL_Rect{ 5, 0, 20, 20 };
+            
             // 恢复渲染器状态
             SDL_SetRenderTarget(m_pRenderer, origTarget);
             SDL_SetRenderDrawColor(m_pRenderer, r, g, b, a);
@@ -30,23 +19,19 @@ namespace CellularNetworkDemonstration {
         }
         ~DemoBaseStationListItem() {
             // 清理子元素和资源
-            if (m_pMinimizeIcon) {
-                SDL_DestroyTexture(m_pMinimizeIcon);
-            }
-            DELETE_IF_EXIST(m_pMinimizeIconPosition)
+            DELETE_IF_EXIST(m_pBaseStationIconPosition)
         }
 
     private:
         const int m_iBaseStationID;
 
-        SDL_Texture *m_pMinimizeIcon;
-        SDL_Rect *m_pMinimizeIconPosition;
+        SDL_Rect *m_pBaseStationIconPosition;
 
         // 绘制界面元素
         virtual void doRender() {
             SDL_SetRenderDrawColor(m_pRenderer, 20, 20, 20, getRenderAlpha());
             SDL_RenderClear(m_pRenderer);
-            SDL_RenderCopy(m_pRenderer, m_pMinimizeIcon, nullptr, m_pMinimizeIconPosition);
+            SDL_RenderCopy(m_pRenderer, DemoTextureManager::get().getTexture(m_pRenderer,"icon-base-station-small.png"), nullptr, m_pBaseStationIconPosition);
         }
 
 

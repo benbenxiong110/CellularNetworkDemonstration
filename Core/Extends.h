@@ -2,6 +2,7 @@
 #include "StdInclude.h"
 
 #define DELETE_IF_EXIST(POINTER) if(POINTER){delete (POINTER);}
+#define DELETE_IF_EXIST_TEXTURE(TEXTURE) if(TEXTURE){SDL_DestroyTexture(TEXTURE);}
 
 namespace CellularNetworkDemonstration {
 

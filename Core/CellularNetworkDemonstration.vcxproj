@@ -87,6 +87,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="DemoMobileClientListItem.cpp" />
     <ClCompile Include="Extends.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuPanel.cpp" />
@@ -130,9 +131,12 @@
     <ClInclude Include="ViewIntroduce.h" />
     <ClInclude Include="ViewPanel.h" />
     <ClInclude Include="ViewWelcome.h" />
+    <ClInclude Include="DemoTextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Hexagon.png" />
+    <Image Include="icon-base-station-small.png" />
+    <Image Include="icon-mobile-phone-small.png" />
     <Image Include="menubar.png" />
     <Image Include="view-about.png" />
     <Image Include="view-demonstration.png" />

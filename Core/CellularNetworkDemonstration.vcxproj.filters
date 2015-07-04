@@ -23,6 +23,7 @@
     <ClCompile Include="ViewBase.cpp">
       <Filter>Main\UI Component\Base</Filter>
     </ClCompile>
+    <ClCompile Include="DemoMobileClientListItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Lib">
@@ -82,6 +83,12 @@
     </Filter>
     <Filter Include="Main\UI Component\ViewPanel\DemonstrationView\MainClass\Client">
       <UniqueIdentifier>{9128d12a-bf73-49a1-8076-b4b07014a436}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\UI Component\ViewPanel\DemonstrationView\SidebarComponent">
+      <UniqueIdentifier>{52358fa9-5523-4896-b325-24600d758400}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\UI Component\ViewPanel\DemonstrationView\Tools">
+      <UniqueIdentifier>{db2de585-ab68-4371-8ab1-94126525433d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -179,13 +186,16 @@
       <Filter>Main\UI Component\ViewPanel\DemonstrationView\MainClass\Client</Filter>
     </ClInclude>
     <ClInclude Include="DemoBaseStationListItem.h">
-      <Filter>Main\UI Component\ViewPanel\DemonstrationView</Filter>
-    </ClInclude>
-    <ClInclude Include="DemoDataManager.h">
-      <Filter>Main\UI Component\ViewPanel\DemonstrationView</Filter>
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView\SidebarComponent</Filter>
     </ClInclude>
     <ClInclude Include="DemoMobileClientListItem.h">
-      <Filter>Main\UI Component\ViewPanel\DemonstrationView</Filter>
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView\SidebarComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoDataManager.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoTextureManager.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +215,12 @@
       <Filter>Res</Filter>
     </Image>
     <Image Include="Hexagon.png">
+      <Filter>Res</Filter>
+    </Image>
+    <Image Include="icon-base-station-small.png">
+      <Filter>Res</Filter>
+    </Image>
+    <Image Include="icon-mobile-phone-small.png">
       <Filter>Res</Filter>
     </Image>
   </ItemGroup>
