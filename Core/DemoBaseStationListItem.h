@@ -1,6 +1,7 @@
 #pragma once
 #include "ButtonBase.h"
 #include "DemoTextureManager.h"
+#include <sstream>
 
 namespace CellularNetworkDemonstration {
     class DemoBaseStationListItem :public ButtonBase {
@@ -12,6 +13,19 @@ namespace CellularNetworkDemonstration {
             SDL_GetRenderDrawColor(m_pRenderer, &r, &g, &b, &a);
             m_pBaseStationIconPosition = new SDL_Rect{ 5, 0, 20, 20 };
             
+
+            string s;
+            stringstream ss;
+            ss << DemoDataManager::get().getMobileClient(m_iBaseStationID)->getId();
+            ss >> s;
+            s = "基站 " + s;
+            SDL_log(s.c_str());
+            SDL_Color color = SDL_Color{ 30, 30, 30, 180 };
+            m_pListText = TTF_RenderTextTexture(m_pRenderer, s.c_str(), 16, &color);
+            int w, h;
+            SDL_QueryTexture(m_pListText, nullptr, nullptr, &w, &h);
+            m_pListTextPosition = new SDL_Rect{ 35, 0, w, h };
+
             // 恢复渲染器状态
             SDL_SetRenderTarget(m_pRenderer, origTarget);
             SDL_SetRenderDrawColor(m_pRenderer, r, g, b, a);
@@ -20,18 +34,24 @@ namespace CellularNetworkDemonstration {
         ~DemoBaseStationListItem() {
             // 清理子元素和资源
             DELETE_IF_EXIST(m_pBaseStationIconPosition)
+                DELETE_IF_EXIST_TEXTURE(m_pListText)
+                DELETE_IF_EXIST(m_pListTextPosition)
         }
 
     private:
         const int m_iBaseStationID;
 
         SDL_Rect *m_pBaseStationIconPosition;
+        SDL_Texture *m_pListText;
+        SDL_Rect *m_pListTextPosition;
 
         // 绘制界面元素
         virtual void doRender() {
             SDL_SetRenderDrawColor(m_pRenderer, 20, 20, 20, getRenderAlpha());
             SDL_RenderClear(m_pRenderer);
             SDL_RenderCopy(m_pRenderer, DemoTextureManager::get().getTexture(m_pRenderer,"icon-base-station-small.png"), nullptr, m_pBaseStationIconPosition);
+            SDL_RenderCopy(m_pRenderer, m_pListText, nullptr, m_pListTextPosition);
+
         }
 
 

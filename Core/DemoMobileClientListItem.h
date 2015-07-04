@@ -1,27 +1,39 @@
 #pragma once
 #include "ButtonBase.h"
 #include "DemoTextureManager.h"
+#include <sstream>
 
 namespace CellularNetworkDemonstration {
     class DemoMoblieClientListItem :public ButtonBase {
     public:
-        DemoMoblieClientListItem(SDL_Renderer *renderer, int mobileClientID):ButtonBase(renderer, 185, 20), m_iMobileClientID(mobileClientID) {
+        DemoMoblieClientListItem(SDL_Renderer *renderer, int mobileClientID) :ButtonBase(renderer, 185, 20), m_iMobileClientID(mobileClientID) {
             SDL_Texture* origTarget = SDL_GetRenderTarget(m_pRenderer);
             Uint8 r, g, b, a;
             SDL_GetRenderDrawColor(m_pRenderer, &r, &g, &b, &a);
 
             /*if (!s_pListIcon_MoiblePhone) {
                 s_pListIcon_MoiblePhone = IMG_LoadTexture(m_pRenderer, "icon-mobile-phone-small.png");
-            }
-            if (!s_pListIcon_Laptop) {
+                }
+                if (!s_pListIcon_Laptop) {
                 s_pListIcon_Laptop = IMG_LoadTexture(m_pRenderer, "icon-mobile-phone-small.png");
-            }
-            if (!s_pListIcon_PDA) {
+                }
+                if (!s_pListIcon_PDA) {
                 s_pListIcon_PDA = IMG_LoadTexture(m_pRenderer, "icon-mobile-phone-small.png");
-            }*/
+                }*/
             if (!s_pListIconPosition) {
                 s_pListIconPosition = new SDL_Rect{ 5, 0, 20, 20 };
             }
+            string s;
+            stringstream ss; 
+            ss << DemoDataManager::get().getMobileClient(m_iMobileClientID)->getId();
+            ss >> s;
+            s = "ÒÆ¶¯Ì¨ " + s;
+            SDL_log(s.c_str());
+            SDL_Color color = SDL_Color{ 30, 30, 30, 180 };
+            m_pListText = TTF_RenderTextTexture(m_pRenderer, s.c_str(), 16, &color);
+            int w, h;
+            SDL_QueryTexture(m_pListText, nullptr, nullptr, &w, &h);
+            m_pListTextPosition = new SDL_Rect{ 35, 0, w, h };
             // »Ö¸´äÖÈ¾Æ÷×´Ì¬
             SDL_SetRenderTarget(m_pRenderer, origTarget);
             SDL_SetRenderDrawColor(m_pRenderer, r, g, b, a);
@@ -31,6 +43,8 @@ namespace CellularNetworkDemonstration {
             //DELETE_IF_EXIST_TEXTURE(m_pListIcon_Laptop)
             //DELETE_IF_EXIST_TEXTURE(m_pListIcon_MoiblePhone)
             //DELETE_IF_EXIST_TEXTURE(m_pListIcon_PDA)
+            DELETE_IF_EXIST_TEXTURE(m_pListText)
+            DELETE_IF_EXIST(m_pListTextPosition)
         }
 
     private:
@@ -41,6 +55,10 @@ namespace CellularNetworkDemonstration {
         static SDL_Texture *s_pListIcon_Laptop;
         static SDL_Texture *s_pListIcon_PDA;*/
         SDL_Rect *s_pListIconPosition;
+        SDL_Texture *m_pListText;
+        SDL_Rect *m_pListTextPosition;
+
+
 
         // »æÖÆ½çÃæÔªËØ
         virtual void doRender() {
@@ -58,15 +76,18 @@ namespace CellularNetworkDemonstration {
             SDL_RenderClear(m_pRenderer);
             switch (DemoDataManager::get().getMobileClient(m_iMobileClientID)->getClientType()) {
                 case MAIN_MOBILE_CLIENT_LAPTOP:
-                    SDL_RenderCopy(m_pRenderer, DemoTextureManager::get().getTexture(m_pRenderer,"icon-mobile-phone-small.png"), nullptr, s_pListIconPosition);
+                    SDL_RenderCopy(m_pRenderer, DemoTextureManager::get().getTexture(m_pRenderer, "icon-laptop-small.png"), nullptr, s_pListIconPosition);
+
                     break;
                 case MAIN_MOBILE_CLIENT_MOBILE_PHONE:
                     SDL_RenderCopy(m_pRenderer, DemoTextureManager::get().getTexture(m_pRenderer, "icon-mobile-phone-small.png"), nullptr, s_pListIconPosition);
                     break;
                 case MAIN_MOBILE_CLIENT_PDA:
-                    SDL_RenderCopy(m_pRenderer, DemoTextureManager::get().getTexture(m_pRenderer, "icon-mobile-phone-small.png"), nullptr, s_pListIconPosition);
+                    SDL_RenderCopy(m_pRenderer, DemoTextureManager::get().getTexture(m_pRenderer, "icon-pda-small.png"), nullptr, s_pListIconPosition);
                     break;
+                    
             }
+            SDL_RenderCopy(m_pRenderer, m_pListText, nullptr, m_pListTextPosition);
         }
 
 

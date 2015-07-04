@@ -214,14 +214,18 @@
     <Image Include="view-welcome.png">
       <Filter>Res</Filter>
     </Image>
-    <Image Include="Hexagon.png">
-      <Filter>Res</Filter>
-    </Image>
     <Image Include="icon-base-station-small.png">
       <Filter>Res</Filter>
     </Image>
     <Image Include="icon-mobile-phone-small.png">
       <Filter>Res</Filter>
     </Image>
+    <Image Include="icon-laptop-small.png">
+      <Filter>Res</Filter>
+    </Image>
+    <Image Include="icon-pda-small.png">
+      <Filter>Res</Filter>
+    </Image>
+    <Image Include="base-station.png" />
   </ItemGroup>
 </Project>

@@ -14,7 +14,7 @@ namespace CellularNetworkDemonstration {
 #endif // DEBUG
     }
 
-    SDL_FORCE_INLINE void SDL_log(char *str) {
+    SDL_FORCE_INLINE void SDL_log(const char *str) {
 #ifdef DEBUG
         std::cout << str << std::endl;
 #endif // DEBUG

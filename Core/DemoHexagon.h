@@ -6,7 +6,7 @@ namespace CellularNetworkDemonstration {
     class DemoHexagon :public ButtonBase {
     public:
         DemoHexagon(SDL_Renderer *renderer, SDL_Color *color)
-            :ButtonBase(renderer,200,200) {
+            :ButtonBase(renderer,400,400) {
 
 
             SDL_Texture* origTarget = SDL_GetRenderTarget(m_pRenderer);
@@ -22,7 +22,7 @@ namespace CellularNetworkDemonstration {
             SDL_RenderClear(m_pRenderer);
             SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
             
-            SDL_Texture *image = IMG_LoadTexture(renderer, "Hexagon.png");
+            SDL_Texture *image = IMG_LoadTexture(renderer, "base-station.png");
             SDL_RenderCopy(m_pRenderer, image, nullptr, nullptr);
             SDL_DestroyTexture(image);
             SDL_RenderPresent(m_pRenderer);

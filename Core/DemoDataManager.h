@@ -35,7 +35,7 @@ namespace CellularNetworkDemonstration {
         }
         
         int addMobileClient(MainMobileClientType type) {
-            int id = getNewId();
+            int id = getNewId(2);
             MainMobileClient *client;
             switch (type) {
                 case CellularNetworkDemonstration::MAIN_MOBILE_CLIENT_MOBILE_PHONE:
@@ -63,7 +63,7 @@ namespace CellularNetworkDemonstration {
         }
 
         int addBaseStation() {
-            int id = getNewId();
+            int id = getNewId(1);
             MainBaseStation *baseStation = new MainBaseStation(id);
             m_vpBaseStationList.push_back(baseStation);
             return id;
@@ -88,9 +88,19 @@ namespace CellularNetworkDemonstration {
 
     private:
         DemoDataManager() { }
-        int getNewId() {
+        int getNewId(int val) {
             static int i = 0;
-            return i++;
+            static int j = 0;
+            static int k = 0;
+            switch (val) {
+                case 1:
+                    return ++j;
+                case 2:
+                    return ++k;
+
+                default:
+                    return ++i;
+            }
         }
         vector<MainBaseStation *> m_vpBaseStationList;
         vector<MainMobileClient *> m_vpMobileClientList;
