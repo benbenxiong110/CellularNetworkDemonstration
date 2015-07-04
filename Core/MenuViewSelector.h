@@ -150,7 +150,6 @@ namespace CellularNetworkDemonstration {
                 }
             }
             lastTick = currentTick;
-            SDL_log(width);
             return width;
         }
 

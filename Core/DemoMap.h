@@ -49,11 +49,12 @@ namespace CellularNetworkDemonstration {
             SDL_SetRenderDrawColor(m_pRenderer, 20, 220, 120, 255);
             SDL_RenderClear(m_pRenderer);
             SDL_Texture *hexagonTexture = hexagon->render();
-            SDL_Rect r = { 0, 0, 200, 200 };
-            for (int i = 0; i < 5; i++) {
-                r.y = 150 * i - 100;
-                for (int j = 0; j < 5; j++) {
-                    r.x = -( i % 2 == 0 ? 100 : 14 ) + j * 172;
+            int em = 150;
+            SDL_Rect r = { 0, 0, 2 * em, 2 * em };
+            for (int i = 0; i < 3; i++) {
+                r.y = SDL_static_cast(int, 1.5 * em * i - em);
+                for (int j = 0; j < 3; j++) {
+                    r.x = SDL_static_cast(int, -( i % 2 == 0 ? em : 0.14 * em ) + j * 1.72 * em);
                     SDL_RenderCopy(m_pRenderer, hexagonTexture, nullptr, &r);
 
                 }

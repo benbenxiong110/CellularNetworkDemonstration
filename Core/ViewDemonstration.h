@@ -60,11 +60,16 @@ namespace CellularNetworkDemonstration {
         }
 
         virtual void doUpdate() {
-            //if (SDL_PointInRect(m_sMousePosition, *m_pMenuSystemCloseRect)) {
-            //    m_pMenuSystemClose->update(SDL_RelationPoint(&m_sMousePosition, m_pMenuSystemCloseRect));
-            //} else {
-            //    m_pMenuSystemClose->update(SDL_Point{ -1, -1 });
-            //}
+            if (SDL_PointInRect(m_sMousePosition, *m_pSidebarRect)) {
+                m_pSidebar->update(SDL_RelationPoint(&m_sMousePosition, m_pSidebarRect));
+            } else {
+                m_pSidebar->update();
+            }
+            if (SDL_PointInRect(m_sMousePosition, *m_pMapRect)) {
+                m_pMap->update(SDL_RelationPoint(&m_sMousePosition, m_pMapRect));
+            } else {
+                m_pMap->update();
+            }
 
         }
     };

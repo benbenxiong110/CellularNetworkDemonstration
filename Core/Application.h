@@ -112,7 +112,9 @@ namespace CellularNetworkDemonstration {
 
             if (SDL_PointInRect(point, *m_pViewPanelRect)) {
                 // Hit Main View
+                m_pViewPanel->update(SDL_RelationPoint(&point, m_pViewPanelRect));
             } else {
+                m_pViewPanel->update();
 
             }
             m_pViewPanel->setViewCode(m_pMenuPanel->getViewCode());

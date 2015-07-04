@@ -178,6 +178,12 @@
     <ClInclude Include="MainLaptop.h">
       <Filter>Main\UI Component\ViewPanel\DemonstrationView\MainClass\Client</Filter>
     </ClInclude>
+    <ClInclude Include="DemoBaseStationListItem.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoDataManager.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="menubar.png">

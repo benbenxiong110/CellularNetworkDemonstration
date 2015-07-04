@@ -1,12 +1,14 @@
 #pragma once
 #include "Include.h"
 namespace CellularNetworkDemonstration {
+    enum MainMobileClientType {
+        MAIN_MOBILE_CLIENT_MOBILE_PHONE,
+        MAIN_MOBILE_CLIENT_LAPTOP,
+        MAIN_MOBILE_CLIENT_PDA
+    };
 
     class MainMobileClient {
     public:
-        MainMobileClient() {
-
-        }
         ~MainMobileClient() {
 
         }
@@ -16,14 +18,26 @@ namespace CellularNetworkDemonstration {
         SDL_Texture *render() {
 
         }
-        string getId() const{
+
+        int getId() const {
             return id;
+        }
+
+        string getUuid() const {
+            return uuid;
         }
         string getModel() const {
             return model;
         }
-    private:
-        string id;
+
+    protected:
+        MainMobileClient(MainMobileClientType cliType, int ID)
+            :clientType(cliType), id(ID) {
+
+        }
+        const MainMobileClientType clientType;
+        const int id;
+        string uuid;
         string model;
         double velocity;
         int trace;

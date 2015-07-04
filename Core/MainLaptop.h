@@ -3,7 +3,7 @@
 namespace CellularNetworkDemonstration {
     class MainLaptop : public MainMobileClient {
     public:
-        MainLaptop() {
+        MainLaptop(int ID) :MainMobileClient(MAIN_MOBILE_CLIENT_LAPTOP, ID) {
 
         }
     private:

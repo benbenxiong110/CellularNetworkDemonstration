@@ -21,6 +21,7 @@ namespace CellularNetworkDemonstration {
             // 设置属性
             m_iViewIndex = 0;
             m_iViewPreviousIndex = 0;
+            m_bSwitching = false;
         }
         ~ViewPanel() {
             // 清理子元素和资源
@@ -67,7 +68,7 @@ namespace CellularNetworkDemonstration {
             }
         }
 
-        virtual void update() {
+        virtual void doUpdate() {
             if (m_bSwitching) {
                 m_pViews[m_iViewIndex]->update();
                 m_pViews[m_iViewPreviousIndex]->update();

@@ -3,7 +3,7 @@
 namespace CellularNetworkDemonstration {
     class MainMobilePhone : public MainMobileClient {
     public:
-        MainMobilePhone() {
+        MainMobilePhone(int ID) :MainMobileClient(MAIN_MOBILE_CLIENT_MOBILE_PHONE, ID) {
 
         }
     private:
