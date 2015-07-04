@@ -54,7 +54,7 @@ namespace CellularNetworkDemonstration {
             m_pBaseStationListTitleRect = new SDL_Rect{ 0, 30, 200, 20 };
 
 
-            // 移动台列表标题             
+            // 移动台列表标题           
             temp = TTF_RenderTextTexture(renderer, "移动台", 18, &color);
             SDL_QueryTexture(temp, nullptr, nullptr, &w, &h);
             m_pMobileClientListTitle = SDL_CreateTexture(m_pRenderer,
