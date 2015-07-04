@@ -13,6 +13,9 @@ namespace CellularNetworkDemonstration {
         int getViewCode() const {
             return this->m_iViewCode;
         }
+        virtual bool handleEvents(SDL_Event &event) {
+            return false;
+        }
     private:
         const int m_iViewCode;
     };

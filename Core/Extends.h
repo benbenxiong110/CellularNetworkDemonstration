@@ -43,6 +43,11 @@ namespace CellularNetworkDemonstration {
         return SDL_Point{ p->x - r->x, p->y - r->y };
     }
 
+    // 获取坐标点在矩形内相对位置
+    SDL_FORCE_INLINE SDL_Point SDL_DeRelationPoint(const SDL_Point *p, const SDL_Rect *r) {
+        return SDL_Point{ r->x + p->x , r->y + p->y };
+    }
+
     // 标准字体系列
     enum TTF_FontFamilySeries {
         // 无衬线字体

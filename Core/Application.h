@@ -28,7 +28,7 @@ namespace CellularNetworkDemonstration {
 
             // 建立窗口
             SDL_log("建立窗口");
-            m_pWindow = SDL_CreateWindow(ApplaicationName, SDL_WINDOWPOS_CENTERED, 
+            m_pWindow = SDL_CreateWindow(ApplaicationName, SDL_WINDOWPOS_CENTERED,
                 SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_BORDERLESS);
             if (m_pWindow == nullptr) {
                 return false;
@@ -106,14 +106,16 @@ namespace CellularNetworkDemonstration {
             if (SDL_PointInRect(point, *m_pMenuPanelRect)) {
                 // Hit Menu Panel
                 m_pMenuPanel->update(SDL_RelationPoint(&point, m_pMenuPanelRect));
-            } else {
+            }
+            else {
                 m_pMenuPanel->update();
             }
 
             if (SDL_PointInRect(point, *m_pViewPanelRect)) {
                 // Hit Main View
                 m_pViewPanel->update(SDL_RelationPoint(&point, m_pViewPanelRect));
-            } else {
+            }
+            else {
                 m_pViewPanel->update();
 
             }
@@ -135,28 +137,16 @@ namespace CellularNetworkDemonstration {
                         break;
                     case SDL_USEREVENT:
                         if (event.user.code == SDL_MINIMIZE) {
-                        SDL_log("最小化窗体");
+                            SDL_log("最小化窗体");
                             m_bMinimized = true;
                             SDL_MinimizeWindow(m_pWindow);
                         }
-                        if (event.user.code & SDL_CHANGEVIEW) {
+                        else if (event.user.code & SDL_CHANGEVIEW) {
                             // Use bitwise operation to set catalog
                             m_pMenuPanel->setViewCode(event.user.code);
                         }
-                        if (event.user.code & SDL_DEMO_SIDEBAR) {
-                            switch (event.user.code) {
-                                case SDL_DEMO_SIDEBAR_BASE_STATION:
-                                    //m_pViewPanel->
-                                    break;
-                                case SDL_DEMO_SIDEBAR_MOBILE_CLIENT:
-                                    break;
-                                case SDL_DEMO_SIDEBAR_KEYBOARD:
-                                    break;
-                                case SDL_DEMO_SIDEBAR_CHIPSET:
-                                    break;
-                                case SDL_DEMO_SIDEBAR_SCREEN:
-                                    break;
-                            }
+                        else {
+                            m_pViewPanel->handleEvents(event);
                         }
                         break;
                     case SDL_MOUSEBUTTONUP:

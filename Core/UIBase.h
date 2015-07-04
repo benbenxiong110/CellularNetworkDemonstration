@@ -40,10 +40,13 @@ namespace CellularNetworkDemonstration {
 
         void update(const SDL_Point mousePoint = {-1,-1}) {
             // 在更新坐标之前进行坐标转换
-            m_sMousePosition = SDL_RelationPoint(&mousePoint, m_pRect);
+            m_sMousePosition = SDL_DeRelationPoint(&mousePoint, m_pRect);
             doUpdate();
         }
 
+        virtual bool handleEvents(SDL_Event &event) {
+            return false;
+        }
     protected:
         SDL_Renderer *m_pRenderer;
         SDL_Texture *m_pTexture;

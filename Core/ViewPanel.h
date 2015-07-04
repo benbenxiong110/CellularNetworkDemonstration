@@ -39,7 +39,9 @@ namespace CellularNetworkDemonstration {
             }
         }
 
-        
+        virtual bool handleEvents(SDL_Event &event) {
+            return this->m_pViews[2]->handleEvents(event);
+        }
 
         bool isSwitching() const {
             return m_bSwitching;

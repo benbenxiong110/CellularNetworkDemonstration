@@ -27,6 +27,11 @@ namespace CellularNetworkDemonstration {
                 DELETE_IF_EXIST(m_pNotificationRect)
         }
 
+        virtual bool handleEvents(SDL_Event &event) {
+
+            return m_pMap->handleEvents(event) || m_pSidebar->handleEvents(event);// || m_pNotification->handleEvents(event);
+        }
+
     private:
         // ÊôĞÔ
 

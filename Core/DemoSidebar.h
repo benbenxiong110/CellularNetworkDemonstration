@@ -92,6 +92,11 @@ namespace CellularNetworkDemonstration {
 
             }
 
+            // 返回上级图标
+            m_pArrow = IMG_LoadTexture(renderer, "left-arrow.png");
+            m_pArrowLv1Rect = new SDL_Rect{ 205, 0, 30, 30 };
+            m_pArrowLv2Rect = new SDL_Rect{ 405, 0, 30, 30 };
+
             // 恢复渲染器状态
             SDL_SetRenderTarget(m_pRenderer, origTarget);
             SDL_SetRenderDrawColor(m_pRenderer, r, g, b, a);
@@ -142,9 +147,37 @@ namespace CellularNetworkDemonstration {
             m_bSwitching = true;
         }
 
+        virtual bool handleEvents(SDL_Event &event) {
+            if (event.user.code & SDL_DEMO_SIDEBAR) {
+                switch (event.user.code) {
+                    case SDL_DEMO_SIDEBAR_BASE_STATION:
+                    {
+                        int baseStation = *(int *) (event.user.data1);
+                    }
+                    setLevel(1);
+                    return true;
+                    case SDL_DEMO_SIDEBAR_MOBILE_CLIENT:
+                    {
+                        int baseStation = *(int *) (event.user.data1);
+                    }
+                    setLevel(1);
+                    return true;
+                    case SDL_DEMO_SIDEBAR_CHIPSET:
+                    {
+                        int baseStation = *(int *) (event.user.data1);
+                    }
+                    setLevel(2);
+                    return true;
+                }
+            }
+            return false;
+        }
+
     private:
         // 属性
         bool m_bSwitching = false;
+        int m_iSelectedTypeLv1 = 0; // 0 - 基站， 1 - 移动台
+        int m_iSelectedTypeLv2 = 1;
         int m_iCurrentLevel = 0;
         int m_iPreviousLevel = 0;
 
@@ -156,6 +189,9 @@ namespace CellularNetworkDemonstration {
         SDL_Rect *m_pBaseStationListTitleRect;
         SDL_Texture *m_pMobileClientListTitle;
         SDL_Rect *m_pMobileClientListTitleRect;
+        SDL_Texture *m_pArrow;
+        SDL_Rect *m_pArrowLv1Rect;
+        SDL_Rect *m_pArrowLv2Rect;
 
         vector<DemoBaseStationListItem *> m_vpBaseStationList;
         vector<DemoMoblieClientListItem *> m_vpMobileClientList;
@@ -167,6 +203,8 @@ namespace CellularNetworkDemonstration {
 
         // 绘制界面元素
         virtual void doRender() {
+            SDL_SetRenderDrawColor_DefalutBackground(m_pRenderer);
+            SDL_RenderClear(m_pRenderer);
             renderLevel(m_iCurrentLevel);
             if (m_bSwitching) {
                 renderLevel(m_iPreviousLevel);
@@ -179,8 +217,6 @@ namespace CellularNetworkDemonstration {
                     // 绘制主页面
                     SDL_Texture *texture;
                     SDL_Rect rect;
-                    SDL_SetRenderDrawColor_DefalutBackground(m_pRenderer);
-                    SDL_RenderClear(m_pRenderer);
                     SDL_RenderCopy(m_pRenderer, m_pTitleText, nullptr, m_pTitleTextRect);
                     SDL_RenderCopy(m_pRenderer, m_pBaseStationListTitle, nullptr, m_pBaseStationListTitleRect);
                     SDL_RenderCopy(m_pRenderer, m_pMobileClientListTitle, nullptr, m_pMobileClientListTitleRect);
@@ -208,9 +244,15 @@ namespace CellularNetworkDemonstration {
                     break;
                 case 1:
                     // 绘制一级菜单
+                    // 绘制返回上级图标
+                    SDL_RenderCopy(m_pRenderer, m_pArrow, nullptr, m_pArrowLv1Rect);
+                    
                     break;
                 case 2:
                     // 绘制二级菜单
+                    // 绘制返回上级图标
+                    SDL_RenderCopy(m_pRenderer, m_pArrow, nullptr, m_pArrowLv2Rect);
+
                     break;
             }
 
@@ -235,7 +277,7 @@ namespace CellularNetworkDemonstration {
                             m_bSwitching = false;
                         }
                         // 缓动曲线设置为正弦
-                        animatiionValue = SDL_static_cast(int, 200 * SDL_sin(percent / 100.0));
+                        animatiionValue = SDL_static_cast(int, 200 * easeInOut(percent / 100.0));
                     }
                     break;
                 case 1:
@@ -248,7 +290,7 @@ namespace CellularNetworkDemonstration {
                                 m_bSwitching = false;
                             }
                             // 缓动曲线设置为正弦
-                            animatiionValue = SDL_static_cast(int, 200 * SDL_sin((100 - percent) / 100.0));
+                            animatiionValue = SDL_static_cast(int, 200 * easeInOut(percent / 100.0));
                         }
                         else {
                             delta = (currentTick - lastTick) / DURATION;
@@ -258,7 +300,7 @@ namespace CellularNetworkDemonstration {
                                 m_bSwitching = false;
                             }
                             // 缓动曲线设置为正弦
-                            animatiionValue = SDL_static_cast(int, 200 * SDL_sin((percent - 100) / 100.0));
+                            animatiionValue = SDL_static_cast(int, 200 * easeInOut((percent - 100) / 100.0));
                         }
 
                     }
@@ -272,42 +314,69 @@ namespace CellularNetworkDemonstration {
                             m_bSwitching = false;
                         }
                         // 缓动曲线设置为正弦
-                        animatiionValue = SDL_static_cast(int, 200 * SDL_sin((200 - percent) / 100.0));
+                        animatiionValue = SDL_static_cast(int, 200 * easeInOut((percent - 100) / 100.0));
 
                     }
                     break;
             }
             lastTick = currentTick;
-            return m_iCurrentLevel;
+            return animatiionValue;
+        }
+
+        inline double easeInOut(double val) {
+            return (-0.5 * (SDL_cos(3.14159 * val) - 1));
         }
 
         virtual void doUpdate() {
-            SDL_Rect rect;
-            rect.x = 5;
-            rect.w = 185;
-            rect.h = 20;
-            for (unsigned int i = 0; i < m_vpBaseStationList.size(); i++) {
-                rect.y = 50 + i * 21;
-                if (SDL_PointInRect(m_sMousePosition, rect)) {
-                    SDL_log(rect.y);
-                    m_vpBaseStationList[i]->update(SDL_RelationPoint(&m_sMousePosition, &rect));
-                }
-                else {
-                    m_vpBaseStationList[i]->update();
-                }
+            if (m_bSwitching) {
+                return;
             }
+            SDL_log(m_sMousePosition.x);
+            SDL_log(m_sMousePosition.y);
+            switch (m_iCurrentLevel) {
 
-            rect.x = 5;
-            rect.w = 185;
-            rect.h = 20;
-            for (unsigned int i = 0; i < m_vpMobileClientList.size(); i++) {
-                rect.y = 200 + i * 21;
-                if (SDL_PointInRect(m_sMousePosition, rect)) {
-                    SDL_log(rect.y);
-                    m_vpMobileClientList[i]->update(SDL_RelationPoint(&m_sMousePosition, &rect));
-                }
-                else {
-                    m_vpMobileClientList[i]->update();
+                case 0:
+                {
+
+
+                    SDL_Rect rect;
+                    rect.x = 5;
+                    rect.w = 185;
+                    rect.h = 20;
+                    for (unsigned int i = 0; i < m_vpBaseStationList.size(); i++) {
+                        rect.y = 50 + i * 21;
+                        if (SDL_PointInRect(m_sMousePosition, rect)) {
+                            m_vpBaseStationList[i]->update(SDL_RelationPoint(&m_sMousePosition, &rect));
+                        }
+                        else {
+                            m_vpBaseStationList[i]->update();
+                        }
+                    }
+
+                    rect.x = 5;
+                    rect.w = 185;
+                    rect.h = 20;
+                    for (unsigned int i = 0; i < m_vpMobileClientList.size(); i++) {
+                        rect.y = 200 + i * 21;
+                        if (SDL_PointInRect(m_sMousePosition, rect)) {
+
+                            m_vpMobileClientList[i]->update(SDL_RelationPoint(&m_sMousePosition, &rect));
+                        }
+                        else {
+                            m_vpMobileClientList[i]->update();
+                        }
+                    }
+                    break;
+                case 1:
+                    if (SDL_PointInRect(m_sMousePosition, *m_pArrowLv1Rect) && MouseManager::get().isLeftButtonDown()) {
+                        upLevel();
+                    }
+                    break;
+                case 2:
+                    if (SDL_PointInRect(m_sMousePosition, *m_pArrowLv2Rect) && MouseManager::get().isLeftButtonDown()) {
+                        upLevel();
+                    }
+                    break;
                 }
             }
         }

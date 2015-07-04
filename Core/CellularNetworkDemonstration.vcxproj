@@ -139,6 +139,7 @@
     <Image Include="icon-laptop-small.png" />
     <Image Include="icon-mobile-phone-small.png" />
     <Image Include="icon-pda-small.png" />
+    <Image Include="left-arrow.png" />
     <Image Include="menubar.png" />
     <Image Include="view-about.png" />
     <Image Include="view-demonstration.png" />
