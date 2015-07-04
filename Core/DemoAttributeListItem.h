@@ -4,28 +4,28 @@
 #include <sstream>
 
 namespace CellularNetworkDemonstration {
-    class DemoMoblieClientListItem :public ButtonBase {
+    class DemoAttributeListItem :public ButtonBase {
     public:
-        DemoMoblieClientListItem(SDL_Renderer *renderer, int mobileClientID) :ButtonBase(renderer, 185, 20), m_iMobileClientID(mobileClientID) {
+        DemoAttributeListItem(SDL_Renderer *renderer, string name, string value,int action) :ButtonBase(renderer, 185, 20), m_iMobileClientID(mobileClientID) {
             SDL_Texture* origTarget = SDL_GetRenderTarget(m_pRenderer);
             Uint8 r, g, b, a;
             SDL_GetRenderDrawColor(m_pRenderer, &r, &g, &b, &a);
 
             /*if (!s_pListIcon_MoiblePhone) {
-                s_pListIcon_MoiblePhone = IMG_LoadTexture(m_pRenderer, "icon-mobile-phone-small.png");
-                }
-                if (!s_pListIcon_Laptop) {
-                s_pListIcon_Laptop = IMG_LoadTexture(m_pRenderer, "icon-mobile-phone-small.png");
-                }
-                if (!s_pListIcon_PDA) {
-                s_pListIcon_PDA = IMG_LoadTexture(m_pRenderer, "icon-mobile-phone-small.png");
-                }*/
+            s_pListIcon_MoiblePhone = IMG_LoadTexture(m_pRenderer, "icon-mobile-phone-small.png");
+            }
+            if (!s_pListIcon_Laptop) {
+            s_pListIcon_Laptop = IMG_LoadTexture(m_pRenderer, "icon-mobile-phone-small.png");
+            }
+            if (!s_pListIcon_PDA) {
+            s_pListIcon_PDA = IMG_LoadTexture(m_pRenderer, "icon-mobile-phone-small.png");
+            }*/
             if (!s_pListIconPosition) {
                 s_pListIconPosition = new SDL_Rect{ 5, 0, 20, 20 };
             }
             string s;
-            stringstream ss; 
-            ss << DemoDataManager::get().getMobileClient(m_iMobileClientID)->getId();
+            stringstream ss;
+            //ss << DemoDataManager::get().getMobileClient(m_iMobileClientID)->getId();
             ss >> s;
             s = "移动台 " + s;
             SDL_log(s.c_str());
@@ -38,20 +38,20 @@ namespace CellularNetworkDemonstration {
             SDL_SetRenderTarget(m_pRenderer, origTarget);
             SDL_SetRenderDrawColor(m_pRenderer, r, g, b, a);
         }
-        ~DemoMoblieClientListItem() {
+        ~SDL_GetRenderDrawColor() {
             // 清理子元素和资源
             //DELETE_IF_EXIST_TEXTURE(m_pListIcon_Laptop)
             //DELETE_IF_EXIST_TEXTURE(m_pListIcon_MoiblePhone)
             //DELETE_IF_EXIST_TEXTURE(m_pListIcon_PDA)
             DELETE_IF_EXIST_TEXTURE(m_pListText)
-            DELETE_IF_EXIST(m_pListTextPosition)
+                DELETE_IF_EXIST(m_pListTextPosition)
         }
 
     private:
         const int m_iMobileClientID;/*
-        static SDL_Texture *s_pListIcon_MoiblePhone;
-        static SDL_Texture *s_pListIcon_Laptop;
-        static SDL_Texture *s_pListIcon_PDA;*/
+                                    static SDL_Texture *s_pListIcon_MoiblePhone;
+                                    static SDL_Texture *s_pListIcon_Laptop;
+                                    static SDL_Texture *s_pListIcon_PDA;*/
         SDL_Rect *s_pListIconPosition;
         SDL_Texture *m_pListText;
         SDL_Rect *m_pListTextPosition;
@@ -59,7 +59,7 @@ namespace CellularNetworkDemonstration {
 
 
         // 绘制界面元素
-        virtual void doRender() {
+        virtual void doRender() {/*
             switch (DemoDataManager::get().getMobileClient(m_iMobileClientID)->getClientType()) {
                 case MAIN_MOBILE_CLIENT_LAPTOP:
                     SDL_SetRenderDrawColor(m_pRenderer, 80, 80, 10, getRenderAlpha());
@@ -83,9 +83,9 @@ namespace CellularNetworkDemonstration {
                 case MAIN_MOBILE_CLIENT_PDA:
                     SDL_RenderCopy(m_pRenderer, DemoTextureManager::get().getTexture(m_pRenderer, "icon-pda-small.png"), nullptr, s_pListIconPosition);
                     break;
-                    
+
             }
-            SDL_RenderCopy(m_pRenderer, m_pListText, nullptr, m_pListTextPosition);
+            SDL_RenderCopy(m_pRenderer, m_pListText, nullptr, m_pListTextPosition);*/
         }
 
 
@@ -104,7 +104,7 @@ namespace CellularNetworkDemonstration {
             int alpha, delta;
             switch (m_pState) {
                 case BUTTON_STATE_NORMAL:
-                    delta = (currentTick - lastTick) / OUT_DURATION;
+                    delta = ( currentTick - lastTick ) / OUT_DURATION;
                     percent -= delta;
                     if (percent < 0) {
                         percent = 0;
@@ -113,7 +113,7 @@ namespace CellularNetworkDemonstration {
                     alpha = SDL_static_cast(int, 160 * SDL_sin(percent / 100.0));
                     break;
                 case BUTTON_STATE_HOVER:
-                    delta = (currentTick - lastTick) / IN_DURATION;
+                    delta = ( currentTick - lastTick ) / IN_DURATION;
                     percent += delta;
                     if (percent > 100) {
                         percent = 100;

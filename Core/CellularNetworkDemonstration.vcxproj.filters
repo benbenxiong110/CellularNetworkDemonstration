@@ -199,6 +199,9 @@
     <ClInclude Include="DemoTextureManager.h">
       <Filter>Main\UI Component\ViewPanel\DemonstrationView\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="DemoAttributeListItem.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView\SidebarComponent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="menubar.png">

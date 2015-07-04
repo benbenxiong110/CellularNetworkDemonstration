@@ -99,6 +99,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="ButtonBase.h" />
+    <ClInclude Include="DemoAttributeListItem.h" />
     <ClInclude Include="DemoBaseStationListItem.h" />
     <ClInclude Include="DemoDataManager.h" />
     <ClInclude Include="DemoHexagon.h" />
