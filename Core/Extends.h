@@ -79,4 +79,15 @@ namespace CellularNetworkDemonstration {
     static const int SDL_CHANGEVIEW_02 = 0x00000102;
     static const int SDL_CHANGEVIEW_03 = 0x00000103;
     static const int SDL_CHANGEVIEW_04 = 0x00000104;
+
+    // 演示菜单切换事件
+
+    static const int SDL_DEMO_SIDEBAR = 0x00000200;
+    // 基站详细信息显示，data1为int数据，基站id
+    static const int SDL_DEMO_SIDEBAR_BASE_STATION = 0x00000201;
+    // 移动台详细信息显示，data1为int数据，移动台id
+    static const int SDL_DEMO_SIDEBAR_MOBILE_CLIENT = 0x00000202;
+    static const int SDL_DEMO_SIDEBAR_KEYBOARD = 0x00000203;
+    static const int SDL_DEMO_SIDEBAR_SCREEN = 0x00000204;
+    static const int SDL_DEMO_SIDEBAR_CHIPSET = 0x00000205;
 }

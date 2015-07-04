@@ -143,6 +143,21 @@ namespace CellularNetworkDemonstration {
                             // Use bitwise operation to set catalog
                             m_pMenuPanel->setViewCode(event.user.code);
                         }
+                        if (event.user.code & SDL_DEMO_SIDEBAR) {
+                            switch (event.user.code) {
+                                case SDL_DEMO_SIDEBAR_BASE_STATION:
+                                    //m_pViewPanel->
+                                    break;
+                                case SDL_DEMO_SIDEBAR_MOBILE_CLIENT:
+                                    break;
+                                case SDL_DEMO_SIDEBAR_KEYBOARD:
+                                    break;
+                                case SDL_DEMO_SIDEBAR_CHIPSET:
+                                    break;
+                                case SDL_DEMO_SIDEBAR_SCREEN:
+                                    break;
+                            }
+                        }
                         break;
                     case SDL_MOUSEBUTTONUP:
                         // 鼠标按键释放事件

@@ -98,12 +98,14 @@ namespace CellularNetworkDemonstration {
         }
 
         virtual void doAction() {
-            //SDL_Event* minimize = new SDL_Event;
-            //minimize->type = SDL_USEREVENT;
-            //minimize->user.code = SDL_MINIMIZE;
-            //SDL_PushEvent(minimize);
-
+            SDL_Event* minimize = new SDL_Event;
+            minimize->type = SDL_USEREVENT;
+            minimize->user.code = SDL_DEMO_SIDEBAR_BASE_STATION;
+            int *id = new int(m_iBaseStationID);
+            minimize->user.data1 = id;
+            SDL_PushEvent(minimize);
             m_pState = BUTTON_STATE_NORMAL;
+
         }
 
         

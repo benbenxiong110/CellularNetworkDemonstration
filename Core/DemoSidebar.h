@@ -83,7 +83,7 @@ namespace CellularNetworkDemonstration {
             }
 
             // 添加移动台列表
-            vector<MainMobileClient *>& mobileClientList = 
+            vector<MainMobileClient *>& mobileClientList =
                 DemoDataManager::get().getMobileClientList();
             for (unsigned int i = 0; i < mobileClientList.size(); i++) {
                 DemoMoblieClientListItem *listItem =
@@ -120,10 +120,34 @@ namespace CellularNetworkDemonstration {
             }
         }
 
+        void deepLevel() {
+            setLevel(m_iCurrentLevel + 1);
+        }
+        void upLevel() {
+            setLevel(m_iCurrentLevel - 1);
+        }
+
+        void setLevel(int level) {
+            if (level < 0) {
+                level = 0;
+            }
+            if (level > 2) {
+                level = 2;
+            }
+            if (level == m_iCurrentLevel) {
+                return;
+            }
+            m_iPreviousLevel = m_iCurrentLevel;
+            m_iCurrentLevel = level;
+            m_bSwitching = true;
+        }
 
     private:
         // 属性
         bool m_bSwitching = false;
+        int m_iCurrentLevel = 0;
+        int m_iPreviousLevel = 0;
+
 
         // 资源
         SDL_Texture *m_pTitleText;
@@ -143,37 +167,118 @@ namespace CellularNetworkDemonstration {
 
         // 绘制界面元素
         virtual void doRender() {
-            SDL_Texture *texture;
-            SDL_Rect rect;
-            SDL_SetRenderDrawColor_DefalutBackground(m_pRenderer);
-            SDL_RenderClear(m_pRenderer);
-            SDL_RenderCopy(m_pRenderer, m_pTitleText, nullptr, m_pTitleTextRect);
-            SDL_RenderCopy(m_pRenderer, m_pBaseStationListTitle, nullptr, m_pBaseStationListTitleRect);
-            SDL_RenderCopy(m_pRenderer, m_pMobileClientListTitle, nullptr, m_pMobileClientListTitleRect);
-
-            // 绘制基站列表项
-            rect.x = 5;
-            rect.w = 185;
-            rect.h = 20;
-            for (unsigned int i = 0; i < m_vpBaseStationList.size(); i++) {
-                rect.y = 50 + i * 21;
-                texture = m_vpBaseStationList[i]->render();
-                SDL_RenderCopy(m_pRenderer, texture, m_vpBaseStationList[i]->Rect(), &rect);
+            renderLevel(m_iCurrentLevel);
+            if (m_bSwitching) {
+                renderLevel(m_iPreviousLevel);
             }
-            
+            m_pRect->x = getAnimationValue();
+        }
+        void renderLevel(int l) {
+            switch (l) {
+                case 0:
+                    // 绘制主页面
+                    SDL_Texture *texture;
+                    SDL_Rect rect;
+                    SDL_SetRenderDrawColor_DefalutBackground(m_pRenderer);
+                    SDL_RenderClear(m_pRenderer);
+                    SDL_RenderCopy(m_pRenderer, m_pTitleText, nullptr, m_pTitleTextRect);
+                    SDL_RenderCopy(m_pRenderer, m_pBaseStationListTitle, nullptr, m_pBaseStationListTitleRect);
+                    SDL_RenderCopy(m_pRenderer, m_pMobileClientListTitle, nullptr, m_pMobileClientListTitleRect);
 
-            // 绘制移动台列表项
-            rect.x = 5;
-            rect.w = 185;
-            rect.h = 20;
-            for (unsigned int i = 0; i < m_vpMobileClientList.size(); i++) {
-                rect.y = 200 + i * 21;
-                texture = m_vpMobileClientList[i]->render();
-                SDL_RenderCopy(m_pRenderer, texture, m_vpMobileClientList[i]->Rect(), &rect);
+                    // 绘制基站列表项
+                    rect.x = 5;
+                    rect.w = 185;
+                    rect.h = 20;
+                    for (unsigned int i = 0; i < m_vpBaseStationList.size(); i++) {
+                        rect.y = 50 + i * 21;
+                        texture = m_vpBaseStationList[i]->render();
+                        SDL_RenderCopy(m_pRenderer, texture, m_vpBaseStationList[i]->Rect(), &rect);
+                    }
+
+
+                    // 绘制移动台列表项
+                    rect.x = 5;
+                    rect.w = 185;
+                    rect.h = 20;
+                    for (unsigned int i = 0; i < m_vpMobileClientList.size(); i++) {
+                        rect.y = 200 + i * 21;
+                        texture = m_vpMobileClientList[i]->render();
+                        SDL_RenderCopy(m_pRenderer, texture, m_vpMobileClientList[i]->Rect(), &rect);
+                    }
+                    break;
+                case 1:
+                    // 绘制一级菜单
+                    break;
+                case 2:
+                    // 绘制二级菜单
+                    break;
             }
 
+        }
 
+        int getAnimationValue() {
 
+            const static int DURATION = 500 / 100;
+            static int percent = 0;
+            static int lastTick = 0;
+            static int currentTick;
+            currentTick = SDL_GetTicks();
+            int animatiionValue = 200 * m_iCurrentLevel;
+            int delta;
+            switch (m_iCurrentLevel) {
+                case 0:
+                    if (percent != 0) {
+                        delta = (currentTick - lastTick) / DURATION;
+                        percent -= delta;
+                        if (percent <= 0) {
+                            percent = 0;
+                            m_bSwitching = false;
+                        }
+                        // 缓动曲线设置为正弦
+                        animatiionValue = SDL_static_cast(int, 200 * SDL_sin(percent / 100.0));
+                    }
+                    break;
+                case 1:
+                    if (percent != 100) {
+                        if (percent < 100) {
+                            delta = (currentTick - lastTick) / DURATION;
+                            percent += delta;
+                            if (percent >= 100) {
+                                percent = 100;
+                                m_bSwitching = false;
+                            }
+                            // 缓动曲线设置为正弦
+                            animatiionValue = SDL_static_cast(int, 200 * SDL_sin((100 - percent) / 100.0));
+                        }
+                        else {
+                            delta = (currentTick - lastTick) / DURATION;
+                            percent -= delta;
+                            if (percent <= 100) {
+                                percent = 100;
+                                m_bSwitching = false;
+                            }
+                            // 缓动曲线设置为正弦
+                            animatiionValue = SDL_static_cast(int, 200 * SDL_sin((percent - 100) / 100.0));
+                        }
+
+                    }
+                    break;
+                case 2:
+                    if (percent != 200) {
+                        delta = (currentTick - lastTick) / DURATION;
+                        percent += delta;
+                        if (percent >= 200) {
+                            percent = 200;
+                            m_bSwitching = false;
+                        }
+                        // 缓动曲线设置为正弦
+                        animatiionValue = SDL_static_cast(int, 200 * SDL_sin((200 - percent) / 100.0));
+
+                    }
+                    break;
+            }
+            lastTick = currentTick;
+            return m_iCurrentLevel;
         }
 
         virtual void doUpdate() {
@@ -186,7 +291,8 @@ namespace CellularNetworkDemonstration {
                 if (SDL_PointInRect(m_sMousePosition, rect)) {
                     SDL_log(rect.y);
                     m_vpBaseStationList[i]->update(SDL_RelationPoint(&m_sMousePosition, &rect));
-                } else {
+                }
+                else {
                     m_vpBaseStationList[i]->update();
                 }
             }
@@ -199,7 +305,8 @@ namespace CellularNetworkDemonstration {
                 if (SDL_PointInRect(m_sMousePosition, rect)) {
                     SDL_log(rect.y);
                     m_vpMobileClientList[i]->update(SDL_RelationPoint(&m_sMousePosition, &rect));
-                } else {
+                }
+                else {
                     m_vpMobileClientList[i]->update();
                 }
             }

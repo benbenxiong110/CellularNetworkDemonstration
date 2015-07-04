@@ -39,6 +39,8 @@ namespace CellularNetworkDemonstration {
             }
         }
 
+        
+
         bool isSwitching() const {
             return m_bSwitching;
         }
