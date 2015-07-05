@@ -39,16 +39,27 @@ namespace CellularNetworkDemonstration {
 
 
         virtual void doRender() {
-            SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 0);
+            SDL_SetRenderDrawColor(m_pRenderer, 180, 120, 40, getRenderAlpha());
             SDL_RenderClear(m_pRenderer);
             if (DemoDataManager::get().getMobileClient(m_iMobileClientID)->isConnected()) {
-
-                SDL_SetRenderDrawColor(m_pRenderer, 180, 120, 40, getRenderAlpha());
+                switch (DemoDataManager::get().getMobileClient(m_iMobileClientID)->getConnection()) {
+                    case 1:
+                        SDL_SetRenderDrawColor(m_pRenderer, 10, 220, 10, 185);
+                        break;
+                    case 2:
+                        SDL_SetRenderDrawColor(m_pRenderer, 110, 130, 220, 185);
+                        break;
+                    default:
+                        break;
+                }
             } else {
                 SDL_SetRenderDrawColor(m_pRenderer, 255, 130, 110, 225);
             }
             for (int i = 0; i < 30; i++) {
-                SDL_RenderDrawLine(m_pRenderer, ( i < 14 ? 14 - i : i - 14 ), i, ( i < 14 ? 14 + i : 44 - i ), i);
+                int j = SDL_static_cast(int,  SDL_sqrt(15 * 15 - ( 15 - i )*( 15 - i )));
+                SDL_RenderDrawLine(m_pRenderer,
+                    14-j, i, 
+                    14+j, i);
             }
             SDL_RenderCopy(m_pRenderer, DemoDataManager::get().getMobileClient(m_iMobileClientID)->render(m_pRenderer), nullptr, m_pIconRect);
         }

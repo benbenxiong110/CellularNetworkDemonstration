@@ -51,8 +51,16 @@ namespace CellularNetworkDemonstration {
             }
         }
 
-        bool isConnected() {
-            return this->connected;
+        void setConnection(int connection) {
+            this->connection = connection;
+        }
+
+        bool isConnected() const {
+            return this->connection > 0;
+        }
+
+        int getConnection() const {
+            return connection;
         }
 
         int getId() const {
@@ -126,7 +134,7 @@ namespace CellularNetworkDemonstration {
         int frequency;
         int x;
         int y;
-        bool connected;
+        int connection;
         const int x0, y0;
         int range;
         MainChip chip;

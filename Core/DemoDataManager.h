@@ -25,7 +25,7 @@ namespace CellularNetworkDemonstration {
                     getHexagonPositionY(0, 2), 300, 2000, 2200, MainBaseStation::TYPE_MICRO);
                 manager->addBaseStation(getHexagonPositionX(1, 0), 
                     getHexagonPositionY(1, 0), 220, 2000, 3600, MainBaseStation::TYPE_UNKNOWN);
-                manager->addBaseStation(getHexagonPositionX(1, 1), 
+                manager->addBaseStation(getHexagonPositionX(1, 2), 
                     getHexagonPositionY(1, 1), 100, 2000, 2100, MainBaseStation::TYPE_MACRO);
                 //manager->addBaseStation(getHexagonPositionX(0, 0), 
                 //    getHexagonPositionY(0, 0), 140, 2000, 4500, MainBaseStation::TYPE_MICRO);
@@ -98,7 +98,19 @@ namespace CellularNetworkDemonstration {
         void updateValue() {
             for (unsigned int i = 0; i < m_vpMobileClientList.size(); i++) {
                 m_vpMobileClientList[i]->update();
+                int n = 0;
+
+                for (unsigned int j = 0; j < m_vpBaseStationList.size(); j++) {
+                    if (SDL_pow(m_vpMobileClientList[i]->getX() - m_vpBaseStationList[j]->getX(),2)
+                        + SDL_pow(m_vpMobileClientList[i]->getY() - m_vpBaseStationList[j]->getY(), 2) < 200 * 200) {
+                        n++;
+                    }
+                }
+                m_vpMobileClientList[i]->setConnection(n);
+                
+                
             }
+
         }
     private:
         DemoDataManager() {
