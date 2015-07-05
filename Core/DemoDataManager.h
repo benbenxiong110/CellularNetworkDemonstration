@@ -23,29 +23,29 @@ namespace CellularNetworkDemonstration {
                 manager->addBaseStation(400, 230, 100, 2000, 2100, MainBaseStation::TYPE_MACRO);
                 manager->addBaseStation(430, 210, 140, 2000, 4500, MainBaseStation::TYPE_MICRO);
 
-                manager->addMobileClient(MAIN_MOBILE_CLIENT_LAPTOP);
-                manager->addMobileClient(MAIN_MOBILE_CLIENT_MOBILE_PHONE);
-                manager->addMobileClient(MAIN_MOBILE_CLIENT_PDA);
-                manager->addMobileClient(MAIN_MOBILE_CLIENT_LAPTOP);
-                manager->addMobileClient(MAIN_MOBILE_CLIENT_MOBILE_PHONE);
-                manager->addMobileClient(MAIN_MOBILE_CLIENT_PDA);
+                manager->addMobileClient(MAIN_MOBILE_CLIENT_LAPTOP, 100, 200);
+                manager->addMobileClient(MAIN_MOBILE_CLIENT_MOBILE_PHONE, 300, 180);
+                manager->addMobileClient(MAIN_MOBILE_CLIENT_PDA, 400, 270);
+                manager->addMobileClient(MAIN_MOBILE_CLIENT_LAPTOP, 300, 220);
+                manager->addMobileClient(MAIN_MOBILE_CLIENT_MOBILE_PHONE, 420, 320);
+                manager->addMobileClient(MAIN_MOBILE_CLIENT_PDA, 300, 150);
 
             }
             return *manager;
         }
 
-        int addMobileClient(MainMobileClientType type) {
+        int addMobileClient(MainMobileClientType type, int x, int y) {
             int id = getNewId(2);
             MainMobileClient *client;
             switch (type) {
                 case CellularNetworkDemonstration::MAIN_MOBILE_CLIENT_MOBILE_PHONE:
-                    client = new MainMobilePhone(id);
+                    client = new MainMobilePhone(id, x, y);
                     break;
                 case CellularNetworkDemonstration::MAIN_MOBILE_CLIENT_LAPTOP:
-                    client = new MainLaptop(id);
+                    client = new MainLaptop(id, x, y);
                     break;
                 case CellularNetworkDemonstration::MAIN_MOBILE_CLIENT_PDA:
-                    client = new MainPDA(id);
+                    client = new MainPDA(id, x, y);
                     break;
             }
             m_vpMobileClientList.push_back(client);
@@ -66,7 +66,7 @@ namespace CellularNetworkDemonstration {
             int circle = 3000, int speed = 2000,
             MainBaseStation::BaseStationType type = MainBaseStation::TYPE_UNKNOWN) {
             int id = getNewId(1);
-            MainBaseStation *baseStation = new MainBaseStation(id, x, y, h, circle, speed,type);
+            MainBaseStation *baseStation = new MainBaseStation(id, x, y, h, circle, speed, type);
             m_vpBaseStationList.push_back(baseStation);
             return id;
         }
@@ -88,6 +88,11 @@ namespace CellularNetworkDemonstration {
             return m_vpMobileClientList;
         }
 
+        void updateValue() {
+            for (unsigned int i = 0; i < m_vpMobileClientList.size(); i++) {
+                m_vpMobileClientList[i]->update();
+            }
+        }
     private:
         DemoDataManager() {
         }
@@ -105,6 +110,9 @@ namespace CellularNetworkDemonstration {
                     return ++i;
             }
         }
+
+
+
         vector<MainBaseStation *> m_vpBaseStationList;
         vector<MainMobileClient *> m_vpMobileClientList;
 

@@ -5,10 +5,10 @@
 #include "DemoDataManager.h"
 
 namespace CellularNetworkDemonstration {
-    class DemoAttributeListItem :public ButtonBase {
+    class DemoMapIcon :public ButtonBase {
     public:
 
-        DemoAttributeListItem(SDL_Renderer *renderer, int clientId)
+        DemoMapIcon(SDL_Renderer *renderer, int clientId)
             :ButtonBase(renderer, 30, 30), m_iMobileClientID(clientId) {
             SDL_Texture* origTarget = SDL_GetRenderTarget(m_pRenderer);
             Uint8 r, g, b, a;
@@ -22,9 +22,15 @@ namespace CellularNetworkDemonstration {
 
         }
 
-        ~DemoAttributeListItem() {
+        ~DemoMapIcon() {
             DELETE_IF_EXIST(m_pIconRect)
         }
+
+        int getMobileClientId() const{
+            return m_iMobileClientID;
+        }
+
+        
 
     private:
         const int m_iMobileClientID;
@@ -36,10 +42,10 @@ namespace CellularNetworkDemonstration {
             SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 0);
             SDL_RenderClear(m_pRenderer);
             SDL_SetRenderDrawColor(m_pRenderer, 180, 120, 40, getRenderAlpha());
-            for (int i = 0; i < 30; i += 2) {
-                SDL_RenderDrawLine(m_pRenderer, ( i < 15 ? 15 - i : i - 15 ), i, ( i < 15 ? 15 + i : i ), i);
+            for (int i = 0; i < 30; i ++) {
+                SDL_RenderDrawLine(m_pRenderer, ( i < 14 ? 14 - i : i - 14 ), i, ( i < 14 ? 14 + i : 44 - i ), i);
             }
-            SDL_RenderCopy(m_pRenderer, DemoDataManager::get().getMobileClient(m_iMobileClientID)->render(m_pRenderer), nullptr, nullptr);
+            SDL_RenderCopy(m_pRenderer, DemoDataManager::get().getMobileClient(m_iMobileClientID)->render(m_pRenderer), nullptr, m_pIconRect);
         }
 
 
@@ -49,7 +55,7 @@ namespace CellularNetworkDemonstration {
         int currentTick;
         int getRenderAlpha() {
 
-            const static int IN_DURATION = 200 / 100;//Divided by 100 percents
+            const static int IN_DURATION = 400 / 100;//Divided by 100 percents
             const static int OUT_DURATION = 400 / 100;//Divided by 100 percents
 
             currentTick = SDL_GetTicks();

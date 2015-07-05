@@ -65,6 +65,9 @@ namespace CellularNetworkDemonstration {
         }
 
         virtual void doUpdate() {
+            // Update data
+            DemoDataManager::get().updateValue();
+
             if (SDL_PointInRect(m_sMousePosition, *m_pSidebarRect)) {
                 m_pSidebar->update(SDL_RelationPoint(&m_sMousePosition, m_pSidebarRect));
             } else {

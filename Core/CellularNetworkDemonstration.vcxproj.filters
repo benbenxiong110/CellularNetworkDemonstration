@@ -163,9 +163,6 @@
     <ClInclude Include="DemoNotification.h">
       <Filter>Main\UI Component\ViewPanel\DemonstrationView</Filter>
     </ClInclude>
-    <ClInclude Include="DemoHexagon.h">
-      <Filter>Main\UI Component\ViewPanel\DemonstrationView</Filter>
-    </ClInclude>
     <ClInclude Include="MainBaseStation.h">
       <Filter>Main\UI Component\ViewPanel\DemonstrationView\MainClass</Filter>
     </ClInclude>
@@ -206,6 +203,9 @@
       <Filter>Main\UI Component\ViewPanel\DemonstrationView\SidebarComponent</Filter>
     </ClInclude>
     <ClInclude Include="DemoMapIcon.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView\MapComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoHexagon.h">
       <Filter>Main\UI Component\ViewPanel\DemonstrationView\MapComponent</Filter>
     </ClInclude>
   </ItemGroup>

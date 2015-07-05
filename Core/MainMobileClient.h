@@ -22,6 +22,7 @@ namespace CellularNetworkDemonstration {
         virtual SDL_Texture *render(SDL_Renderer *renderer) = 0;
 
         void update() {
+            position = SDL_GetTicks() % 32000;
             switch (trace) {
                 case 0:
                     trace_0_update();
@@ -50,7 +51,9 @@ namespace CellularNetworkDemonstration {
             }
         }
 
-
+        bool isConnected() {
+            return this->connected;
+        }
 
         int getId() const {
             return id;
@@ -94,16 +97,25 @@ namespace CellularNetworkDemonstration {
         }
 
         void setChip(MainChip::ChipType type, int width, int height, int speed) {
-            chip.setChip(type,width,height,speed);
+            chip.setChip(type, width, height, speed);
         }
 
         MainChip &getChip() {
             return chip;
         }
-    protected:
-        MainMobileClient(MainMobileClientType cliType, int ID)
-            :clientType(cliType), id(ID) {
 
+        int getX() const {
+            return x;
+        }
+
+        int getY() const {
+            return y;
+        }
+
+    protected:
+        MainMobileClient(MainMobileClientType cliType, int ID, int x, int y)
+            :clientType(cliType), id(ID), x0(x), y0(y) {
+            trace = (id - 1) % 7;
         }
         const MainMobileClientType clientType;
         const int id;
@@ -114,24 +126,59 @@ namespace CellularNetworkDemonstration {
         int frequency;
         int x;
         int y;
+        bool connected;
+        const int x0, y0;
+        int range;
         MainChip chip;
         MainKeyboard keyboard;
         MainScreen screen;
 
+
         // Different trace
+        const double PI = 3.1415926;
+        int position = 0;
         void trace_0_update() {
+            if (position < 8000 * velocity) {
+                x = SDL_static_cast(int, x0 + range * 100.0 * position / 8000 / velocity);
+                y = y0;
+
+            } else if (position < 16000 * velocity) {
+                x = x0 + range * 100;
+                y = SDL_static_cast(int, y0 + range * 100.0 * (position % 8000 ) / 8000 / velocity);
+
+            } else if (position < 24000 * velocity) {
+                x = SDL_static_cast(int, x0 + range * 100.0 * (8000- position % 8000 ) / 8000 / velocity);
+                y = y0 + range * 100;
+
+            } else {
+                x = x0;
+                y = SDL_static_cast(int, y0 + range * 100.0 * ( 8000 - position % 8000 ) / 8000 / velocity);
+
+            }
         }
         void trace_1_update() {
+            x = SDL_static_cast(int, x0 + range * 25 * SDL_sin(velocity * PI *position / 8000));
+            y = SDL_static_cast(int, y0 + range * 25 * SDL_cos(velocity * PI *position / 8000));
         }
         void trace_2_update() {
+            x = SDL_static_cast(int, x0 + range * 25 * SDL_sin(velocity * PI *position / 8000));
+            y = SDL_static_cast(int, y0 + range * 25 * SDL_cos(velocity * PI *position / 8000));
         }
         void trace_3_update() {
+            x = SDL_static_cast(int, x0 + range * 25 * SDL_sin(velocity * PI *position / 8000));
+            y = SDL_static_cast(int, y0 + range * 25 * SDL_cos(velocity * PI *position / 8000));
         }
         void trace_4_update() {
+            x = SDL_static_cast(int, x0 + range * 25 * SDL_sin(velocity * PI *position / 8000));
+            y = SDL_static_cast(int, y0 + range * 25 * SDL_cos(velocity * PI *position / 8000));
         }
         void trace_5_update() {
+            x = SDL_static_cast(int, x0 + range * 25 * SDL_cos(velocity * PI *position / 8000));
+            y = SDL_static_cast(int, y0 + range * 25 * SDL_sin(velocity * PI *position / 8000));
         }
         void trace_6_update() {
+            x = SDL_static_cast(int, x0 + range * 25 * SDL_cos(velocity * PI *position / 8000));
+            y = SDL_static_cast(int, y0 + range * 25 * SDL_sin(velocity * PI *position / 8000));
         }
     };
 }
