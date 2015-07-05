@@ -98,6 +98,24 @@ namespace CellularNetworkDemonstration {
             m_pArrowLv1Rect = new SDL_Rect{ 205, 0, 30, 30 };
             m_pArrowLv2Rect = new SDL_Rect{ 405, 0, 30, 30 };
 
+            m_pBaseStationTitle = TTF_RenderTextTexture(renderer, "基站信息", 22, &color);
+            SDL_QueryTexture(m_pBaseStationTitle, nullptr, nullptr, &w, &h);
+            m_pBaseStationTitleRect = new SDL_Rect{ 240, 0, w, h };
+            m_pMoblieClientTitle = TTF_RenderTextTexture(renderer, "移动台信息", 22, &color);
+            SDL_QueryTexture(m_pMoblieClientTitle, nullptr, nullptr, &w, &h);
+            m_pMoblieClientTitleRect = new SDL_Rect{ 240, 0, w, h };
+
+
+            m_pScreenTitle = TTF_RenderTextTexture(renderer, "屏幕信息", 22, &color);
+            SDL_QueryTexture(m_pScreenTitle, nullptr, nullptr, &w, &h);
+            m_pScreenTitleRect = new SDL_Rect{ 440, 0, w, h };
+            m_pKeyboardTitle = TTF_RenderTextTexture(renderer, "键盘信息", 22, &color);
+            SDL_QueryTexture(m_pKeyboardTitle, nullptr, nullptr, &w, &h);
+            m_pKeyboardTitleRect = new SDL_Rect{ 440, 0, w, h };
+            m_pChipsetTitle = TTF_RenderTextTexture(renderer, "芯片信息", 22, &color);
+            SDL_QueryTexture(m_pChipsetTitle, nullptr, nullptr, &w, &h);
+            m_pChipsetTitleRect = new SDL_Rect{ 440, 0, w, h };
+
             // 恢复渲染器状态
             SDL_SetRenderTarget(m_pRenderer, origTarget);
             SDL_SetRenderDrawColor(m_pRenderer, r, g, b, a);
@@ -196,12 +214,21 @@ namespace CellularNetworkDemonstration {
         SDL_Texture *m_pArrow;
         SDL_Rect *m_pArrowLv1Rect;
         SDL_Rect *m_pArrowLv2Rect;
+        SDL_Texture *m_pBaseStationTitle;
+        SDL_Rect *m_pBaseStationTitleRect;
+        SDL_Texture *m_pMoblieClientTitle;
+        SDL_Rect *m_pMoblieClientTitleRect;
+        SDL_Texture *m_pKeyboardTitle;
+        SDL_Rect *m_pKeyboardTitleRect;
+        SDL_Texture *m_pScreenTitle;
+        SDL_Rect *m_pScreenTitleRect;
+        SDL_Texture *m_pChipsetTitle;
+        SDL_Rect *m_pChipsetTitleRect;
 
         vector<DemoBaseStationListItem *> m_vpBaseStationList;
         vector<DemoMoblieClientListItem *> m_vpMobileClientList;
         vector<DemoAttributeListItem *>m_vpAttributeListLv1;
         vector<DemoAttributeListItem *>m_vpAttributeListLv2;
-
         // 子元素
         //MenuSystemClose *m_pMenuSystemClose;
         //SDL_Rect *m_pMenuSystemCloseRect;
@@ -244,10 +271,24 @@ namespace CellularNetworkDemonstration {
                 m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "覆盖半径", s));
             } else {
                 // Mobile Client
-                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "号码", ""));
-                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "通信模式", ""));
-                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "移动速度", ""));
-                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "频率", ""));
+                MainMobileClient * mobileClient = DemoDataManager::get().getMobileClient(m_iSelectedIdLv1);
+                stringstream ss; string s;
+                ss << mobileClient->getUuid();
+                ss >> s;
+                ss.clear();
+                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "号码", s));
+                ss << mobileClient->getModel();
+                ss >> s;
+                ss.clear();
+                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "通信模式", s));
+                ss << mobileClient->getVelocity();
+                ss >> s;
+                ss.clear();
+                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "移动速度", s));
+                ss << mobileClient->getFrequency();
+                ss >> s;
+                ss.clear();
+                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "频率", s));
 
                 m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, DemoAttributeListItem::ATTRIBUTE_TYPE_CHIPSET, m_iSelectedIdLv1));
                 m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, DemoAttributeListItem::ATTRIBUTE_TYPE_SCREEN, m_iSelectedIdLv1));
@@ -258,7 +299,7 @@ namespace CellularNetworkDemonstration {
         }
         bool updateListItemLv2(int lv1Type, int lv1Id, int lv2Type) {
             if (!updateListItemLv1(lv1Type, lv1Id) && lv2Type == m_iSelectedTypeLv2) {
-                return false;
+                //return false;
             }
             m_iSelectedTypeLv2 = lv2Type;
             for (unsigned int i = 0; i < m_vpAttributeListLv2.size(); i++) {
@@ -268,26 +309,82 @@ namespace CellularNetworkDemonstration {
             switch (lv2Type) {
                 case 1:
                     // Chipset
-                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "类型", ""));
-                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "宽度", ""));
-                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "高度", ""));
-                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "处理速度", ""));
-                    break;
+                {
+                    MainChip *chipset = &(DemoDataManager::get().getMobileClient(m_iSelectedIdLv1)->getChip());
+                    stringstream ss; string s;
+                    ss << chipset->getTypeName();
+                    ss >> s;
+                    ss.clear();
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "类型", s));
+
+                    ss << chipset->getWidth();
+                    ss >> s;
+                    ss.clear();
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "宽度", s));
+                    ss << chipset->getHeight();
+                    ss >> s;
+                    ss.clear();
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "高度", s));
+                    ss << chipset->getSpeed();
+                    ss >> s;
+                    ss.clear();
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "处理速度", s));
+                }
+                break;
                 case 2:
                     // Screen
-                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "屏幕宽度", ""));
-                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "屏幕高度", ""));
-                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "颜色", ""));
-                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "分辨率-x", ""));
-                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "分辨率-y", ""));
-                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "类型", ""));
+                { 
+                    MainScreen *screen = &( DemoDataManager::get().getMobileClient(m_iSelectedIdLv1)->getScreen());
+                    stringstream ss; string s;
+                    ss << screen->getWidth();
+                    ss >> s;
+                    ss.clear();
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "屏幕宽度", s));
+                    ss << screen->getHeight();
+                    ss >> s;
+                    ss.clear();
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "屏幕高度", s));
+                    ss << screen->getColor();
+                    ss >> s;
+                    ss.clear();
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "颜色", s));
+                    ss << screen->getResolutionX();
+                    ss >> s;
+                    ss.clear();
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "分辨率-x", s));
+                    ss << screen->getResolutionY();
+                    ss >> s;
+                    ss.clear();
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "分辨率-y", s));
+                    ss << screen->getTypeName();
+                    ss >> s;
+                    ss.clear(); 
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "类型", s));
+                }
                     break;
                 case 3:
                     // Keyboard
-                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "按键个数", ""));
-                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "按键宽度", ""));
-                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "按键高度", ""));
-                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "颜色", ""));
+                { 
+
+                    MainKeyboard *keyboard = &( DemoDataManager::get().getMobileClient(m_iSelectedIdLv1)->getKeyboard());
+                    stringstream ss; string s;
+                    ss << keyboard->getKeyNumber();
+                    ss >> s;
+                    ss.clear();
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "按键个数", s));
+                    ss << keyboard->getWidth();
+                    ss >> s;
+                    ss.clear();
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "按键宽度", s));
+                    ss << keyboard->getHeight();
+                    ss >> s;
+                    ss.clear();
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "按键高度", s));
+                    ss << keyboard->getColor();
+                    ss >> s;
+                    ss.clear();
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "颜色", s));
+                }
                     break;
                 default:
                     break;
@@ -341,6 +438,18 @@ namespace CellularNetworkDemonstration {
                     // 绘制返回上级图标
                     SDL_RenderCopy(m_pRenderer, m_pArrow, nullptr, m_pArrowLv1Rect);
 
+                    switch (m_iSelectedTypeLv1) {
+                        case 0:
+                            SDL_RenderCopy(m_pRenderer, m_pBaseStationTitle, nullptr, m_pBaseStationTitleRect);
+                            break;
+
+                        case 1:
+                            SDL_RenderCopy(m_pRenderer, m_pMoblieClientTitle, nullptr, m_pMoblieClientTitleRect);
+                            break;
+                        default:
+                            break;
+                    }
+
                     // 绘制移动台列表项
                     rect.x = 205;
                     rect.w = 185;
@@ -355,6 +464,21 @@ namespace CellularNetworkDemonstration {
                     // 绘制二级菜单
                     // 绘制返回上级图标
                     SDL_RenderCopy(m_pRenderer, m_pArrow, nullptr, m_pArrowLv2Rect);
+
+                    switch (m_iSelectedTypeLv2) {
+                        case 1:
+
+                            SDL_RenderCopy(m_pRenderer, m_pChipsetTitle, nullptr, m_pChipsetTitleRect);
+                            break;
+                        case 2:
+                            SDL_RenderCopy(m_pRenderer, m_pScreenTitle, nullptr, m_pScreenTitleRect);
+                            break;
+                        case 3:
+                            SDL_RenderCopy(m_pRenderer, m_pKeyboardTitle, nullptr, m_pKeyboardTitleRect);
+                            break;
+                        default:
+                            break;
+                    }
 
                     // 绘制移动台列表项
                     rect.x = 405;

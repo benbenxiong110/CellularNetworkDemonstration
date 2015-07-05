@@ -46,6 +46,27 @@ namespace CellularNetworkDemonstration {
         ScreenType getType() const {
             return this->type;
         }
+
+        string getTypeName() const {
+            switch (type) {
+                case CellularNetworkDemonstration::MainScreen::SCREEN_TYPE_NO_TOUCH:
+                    return "无触控";
+                    break;
+                case CellularNetworkDemonstration::MainScreen::SCREEN_R_TOUCH:
+                    return "电阻式触控";
+                    break;
+                case CellularNetworkDemonstration::MainScreen::SCREEN_C_TOUCH:
+                    return "电容式触控";
+                    break;
+                case CellularNetworkDemonstration::MainScreen::SCREEN_MULTI_C_TOUCH:
+                    return "电容多点触控";
+                    break;
+                default:
+                    return "";
+                    break;
+            }
+        }
+
         void setWidth(int width) {
             this->width = width;
         }

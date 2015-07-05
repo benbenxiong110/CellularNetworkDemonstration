@@ -34,6 +34,28 @@ namespace CellularNetworkDemonstration {
         ChipType getType() const {
             return this->type;
         }
+        string getTypeName() const {
+            switch (type) {
+                case CellularNetworkDemonstration::MainChip::CHIP_TYPE_X86:
+                    return "x86";
+                    break;
+                case CellularNetworkDemonstration::MainChip::CHIP_TYPE_AMD64:
+                    return "AMD-64";
+                    break;
+                case CellularNetworkDemonstration::MainChip::CHIP_TYPE_IA64:
+                    return "IA-64";
+                    break;
+                case CellularNetworkDemonstration::MainChip::CHIP_TYPE_ARM:
+                    return "ARM";
+                    break;
+                case CellularNetworkDemonstration::MainChip::CHIP_TYPE_POWER_PC:
+                    return "Power PC";
+                    break;
+                default:
+                    return "";
+                    break;
+            }
+        }
         void setWidth(int width) {
             this->width = width;
         }

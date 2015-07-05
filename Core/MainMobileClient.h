@@ -119,7 +119,21 @@ namespace CellularNetworkDemonstration {
         int getY() const {
             return y;
         }
-
+        double getVelocity() const{
+            return velocity;
+        }
+        double getFrequency() const {
+            return frequency;
+        }
+        void setModel(string model) {
+            this->model = model;
+        }
+        void setUuid(string uuid) {
+            this->uuid = uuid;
+        }
+        void setFrequency(int frequency) {
+            this->frequency = frequency;
+        }
     protected:
         MainMobileClient(MainMobileClientType cliType, int ID, int x, int y)
             :clientType(cliType), id(ID), x0(x), y0(y) {

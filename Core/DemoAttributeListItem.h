@@ -95,7 +95,7 @@ namespace CellularNetworkDemonstration {
             color = { 30, 30, 30, 180 };
             texture = TTF_RenderTextTexture(m_pRenderer, value.c_str(), 16, &color);
             SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
-            rect = { 140 - w / 2, -2, w, h };
+            rect = { 135 - w / 2, -2, w, h };
             SDL_RenderCopy(m_pRenderer, texture, nullptr, &rect);
             SDL_DestroyTexture(texture);
 

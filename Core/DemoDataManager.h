@@ -17,25 +17,80 @@ namespace CellularNetworkDemonstration {
 
                 // Initialize Data
                 /*
-                manager->addBaseStation(getHexagonPositionX(0, 0), 
-                    getHexagonPositionY(0, 0), 200, 2000, 3000, MainBaseStation::TYPE_MICRO);*/
-                manager->addBaseStation(getHexagonPositionX(0, 1), 
+                manager->addBaseStation(getHexagonPositionX(0, 0),
+                getHexagonPositionY(0, 0), 200, 2000, 3000, MainBaseStation::TYPE_MICRO);*/
+                manager->addBaseStation(getHexagonPositionX(0, 1),
                     getHexagonPositionY(0, 1), 260, 2000, 2300, MainBaseStation::TYPE_MACRO);
                 manager->addBaseStation(getHexagonPositionX(0, 2),
                     getHexagonPositionY(0, 2), 300, 2000, 2200, MainBaseStation::TYPE_MICRO);
-                manager->addBaseStation(getHexagonPositionX(1, 0), 
+                manager->addBaseStation(getHexagonPositionX(1, 0),
                     getHexagonPositionY(1, 0), 220, 2000, 3600, MainBaseStation::TYPE_UNKNOWN);
-                manager->addBaseStation(getHexagonPositionX(1, 2), 
+                manager->addBaseStation(getHexagonPositionX(1, 2),
                     getHexagonPositionY(1, 1), 100, 2000, 2100, MainBaseStation::TYPE_MACRO);
                 //manager->addBaseStation(getHexagonPositionX(0, 0), 
                 //    getHexagonPositionY(0, 0), 140, 2000, 4500, MainBaseStation::TYPE_MICRO);
+                int id;
+                MainMobileClient *client;
 
-                manager->addMobileClient(MAIN_MOBILE_CLIENT_LAPTOP, 100, 200);
-                manager->addMobileClient(MAIN_MOBILE_CLIENT_MOBILE_PHONE, 300, 180);
-                manager->addMobileClient(MAIN_MOBILE_CLIENT_PDA, 400, 270);
-                manager->addMobileClient(MAIN_MOBILE_CLIENT_LAPTOP, 300, 220);
-                manager->addMobileClient(MAIN_MOBILE_CLIENT_MOBILE_PHONE, 420, 320);
-                manager->addMobileClient(MAIN_MOBILE_CLIENT_PDA, 300, 150);
+
+                id = manager->addMobileClient(MAIN_MOBILE_CLIENT_LAPTOP, 100, 200);
+                client = manager->getMobileClient(id);
+                client->setModel("Model-04");
+                client->setUuid("18292870000");
+                client->setFrequency(16000);
+                client->setChip(MainChip::CHIP_TYPE_X86, 200, 200, 32000);
+                client->setKeyboard(106, 35, 17, "银色");
+                client->setScreen(MainScreen::SCREEN_TYPE_NO_TOUCH, 30, 10, 64000, 1080, 1920);
+
+
+                id = manager->addMobileClient(MAIN_MOBILE_CLIENT_MOBILE_PHONE, 300, 180);
+                client = manager->getMobileClient(id);
+                client->setModel("Model-03");
+                client->setUuid("13621340000");
+                client->setFrequency(18000);
+                client->setChip(MainChip::CHIP_TYPE_ARM, 200, 200, 32000);
+                client->setKeyboard(106, 35, 17, "黄色");
+                client->setScreen(MainScreen::SCREEN_MULTI_C_TOUCH, 30, 10, 64000, 1080, 1920);
+
+
+                id = manager->addMobileClient(MAIN_MOBILE_CLIENT_PDA, 400, 270);
+                client = manager->getMobileClient(id);
+                client->setModel("Model-02");
+                client->setUuid("13122170000");
+                client->setFrequency(36000);
+                client->setChip(MainChip::CHIP_TYPE_POWER_PC, 200, 200, 32000);
+                client->setKeyboard(106, 35, 17, "黑色");
+                client->setScreen(MainScreen::SCREEN_R_TOUCH, 30, 10, 64000, 1080, 1920);
+
+
+                id = manager->addMobileClient(MAIN_MOBILE_CLIENT_LAPTOP, 300, 220);
+                client = manager->getMobileClient(id);
+                client->setModel("Model-01");
+                client->setUuid("15322870000");
+                client->setFrequency(16000);
+                client->setChip(MainChip::CHIP_TYPE_AMD64, 200, 200, 32000);
+                client->setKeyboard(106, 35, 17, "棕色");
+                client->setScreen(MainScreen::SCREEN_C_TOUCH, 30, 10, 64000, 1080, 1920);
+
+
+                id = manager->addMobileClient(MAIN_MOBILE_CLIENT_MOBILE_PHONE, 420, 320);
+                client = manager->getMobileClient(id);
+                client->setModel("Model-05");
+                client->setUuid("15987270000");
+                client->setFrequency(16000);
+                client->setChip(MainChip::CHIP_TYPE_ARM, 200, 200, 32000);
+                client->setKeyboard(106, 35, 17, "绿色");
+                client->setScreen(MainScreen::SCREEN_MULTI_C_TOUCH, 30, 10, 64000, 1080, 1920);
+
+
+                id = manager->addMobileClient(MAIN_MOBILE_CLIENT_PDA, 300, 150);
+                client = manager->getMobileClient(id);
+                client->setModel("Model-06");
+                client->setUuid("13002210000");
+                client->setFrequency(16000);
+                client->setChip(MainChip::CHIP_TYPE_IA64, 200, 200, 32000);
+                client->setKeyboard(106, 35, 17, "灰色");
+                client->setScreen(MainScreen::SCREEN_C_TOUCH, 30, 10, 64000, 1080, 1920);
 
             }
             return *manager;
@@ -101,14 +156,14 @@ namespace CellularNetworkDemonstration {
                 int n = 0;
 
                 for (unsigned int j = 0; j < m_vpBaseStationList.size(); j++) {
-                    if (SDL_pow(m_vpMobileClientList[i]->getX() - m_vpBaseStationList[j]->getX(),2)
+                    if (SDL_pow(m_vpMobileClientList[i]->getX() - m_vpBaseStationList[j]->getX(), 2)
                         + SDL_pow(m_vpMobileClientList[i]->getY() - m_vpBaseStationList[j]->getY(), 2) < 200 * 200) {
                         n++;
                     }
                 }
                 m_vpMobileClientList[i]->setConnection(n);
-                
-                
+
+
             }
 
         }
