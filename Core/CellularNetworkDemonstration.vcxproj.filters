@@ -26,6 +26,21 @@
     <ClCompile Include="DemoMobileClientListItem.cpp">
       <Filter>Main\UI Component\ViewPanel\DemonstrationView\SidebarComponent</Filter>
     </ClCompile>
+    <ClCompile Include="ViewWelcome.cpp">
+      <Filter>Main\UI Component\ViewPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewIntroduce.cpp">
+      <Filter>Main\UI Component\ViewPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewDemonstration.cpp">
+      <Filter>Main\UI Component\ViewPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewAbout.cpp">
+      <Filter>Main\UI Component\ViewPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="DemoSidebar.cpp">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Lib">
@@ -225,7 +240,6 @@
     <Image Include="icon-pda-small.png">
       <Filter>Res</Filter>
     </Image>
-    <Image Include="base-station.png" />
     <Image Include="left-arrow.png">
       <Filter>Res</Filter>
     </Image>
@@ -236,6 +250,9 @@
       <Filter>Res</Filter>
     </Image>
     <Image Include="view-welcome.png">
+      <Filter>Res</Filter>
+    </Image>
+    <Image Include="base-station.png">
       <Filter>Res</Filter>
     </Image>
   </ItemGroup>

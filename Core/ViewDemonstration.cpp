@@ -1,0 +1,57 @@
+#include "ViewDemonstration.h"
+
+
+
+CellularNetworkDemonstration::ViewDemonstration::ViewDemonstration(SDL_Renderer* renderer, int viewCode) :ViewBase(renderer, viewCode) {
+    //m_pDemonstrationImage = IMG_LoadTexture(m_pRenderer, "view-demonstration.png");
+
+    m_pSidebar = new DemoSidebar(m_pRenderer);
+    m_pSidebarRect = new SDL_Rect{ 0, 5, 195, 440 };
+    m_pMap = new DemoMap(m_pRenderer);
+    m_pMapRect = new SDL_Rect{ 195, 5, 600, 440 };
+}
+
+CellularNetworkDemonstration::ViewDemonstration::~ViewDemonstration() {
+    DELETE_IF_EXIST(m_pSidebar)
+        DELETE_IF_EXIST(m_pSidebarRect)
+        DELETE_IF_EXIST(m_pMap)
+        DELETE_IF_EXIST(m_pMapRect)
+        DELETE_IF_EXIST(m_pNotification)
+        DELETE_IF_EXIST(m_pNotificationRect)
+}
+
+bool CellularNetworkDemonstration::ViewDemonstration::handleEvents(SDL_Event &event) {
+    return m_pMap->handleEvents(event) || m_pSidebar->handleEvents(event);// || m_pNotification->handleEvents(event);
+}
+
+void CellularNetworkDemonstration::ViewDemonstration::doRender() {
+    //m_pMenuSystemCloseRect->x = m_sMousePosition.x - m_pMenuSystemCloseRect->w/2;
+    //m_pMenuSystemCloseRect->y = m_sMousePosition.y - m_pMenuSystemCloseRect->h / 2;
+
+    SDL_SetRenderDrawColor_DefalutBackground(m_pRenderer);
+    SDL_RenderClear(m_pRenderer);
+
+    SDL_Texture *sidebarTexture = m_pSidebar->render();
+    SDL_Texture *mapTexture = m_pMap->render();
+    //SDL_Texture *notificationTexture = m_pNotification->render();
+
+    SDL_RenderCopy(m_pRenderer, sidebarTexture, m_pSidebar->Rect(), m_pSidebarRect);
+    SDL_RenderCopy(m_pRenderer, mapTexture, m_pMap->Rect(), m_pMapRect);
+    //SDL_RenderCopy(m_pRenderer, notificationTexture, m_pNotification->Rect(), m_pNotificationRect);
+}
+
+void CellularNetworkDemonstration::ViewDemonstration::doUpdate() {
+    // Update data
+    DemoDataManager::get().updateValue();
+
+    if (SDL_PointInRect(m_sMousePosition, *m_pSidebarRect)) {
+        m_pSidebar->update(SDL_RelationPoint(&m_sMousePosition, m_pSidebarRect));
+    } else {
+        m_pSidebar->update();
+    }
+    if (SDL_PointInRect(m_sMousePosition, *m_pMapRect)) {
+        m_pMap->update(SDL_RelationPoint(&m_sMousePosition, m_pMapRect));
+    } else {
+        m_pMap->update();
+    }
+}
