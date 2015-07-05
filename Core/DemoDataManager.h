@@ -16,12 +16,12 @@ namespace CellularNetworkDemonstration {
                 manager = new DemoDataManager();
 
                 // Initialize Data
-                manager->addBaseStation();
-                manager->addBaseStation();
-                manager->addBaseStation();
-                manager->addBaseStation();
-                manager->addBaseStation();
-                manager->addBaseStation();
+                manager->addBaseStation(100, 100, 200, 2000, 3000, MainBaseStation::TYPE_MICRO);
+                manager->addBaseStation(100, 0, 260, 2000, 2300, MainBaseStation::TYPE_MACRO);
+                manager->addBaseStation(0, 100, 300, 2000, 2200, MainBaseStation::TYPE_MICRO);
+                manager->addBaseStation(660, 120, 220, 2000, 3600, MainBaseStation::TYPE_UNKNOWN);
+                manager->addBaseStation(400, 230, 100, 2000, 2100, MainBaseStation::TYPE_MACRO);
+                manager->addBaseStation(430, 210, 140, 2000, 4500, MainBaseStation::TYPE_MICRO);
 
                 manager->addMobileClient(MAIN_MOBILE_CLIENT_LAPTOP);
                 manager->addMobileClient(MAIN_MOBILE_CLIENT_MOBILE_PHONE);
@@ -33,7 +33,7 @@ namespace CellularNetworkDemonstration {
             }
             return *manager;
         }
-        
+
         int addMobileClient(MainMobileClientType type) {
             int id = getNewId(2);
             MainMobileClient *client;
@@ -62,9 +62,11 @@ namespace CellularNetworkDemonstration {
 
         }
 
-        int addBaseStation() {
+        int addBaseStation(int x = 0, int y = 0, int h = 100,
+            int circle = 3000, int speed = 2000,
+            MainBaseStation::BaseStationType type = MainBaseStation::TYPE_UNKNOWN) {
             int id = getNewId(1);
-            MainBaseStation *baseStation = new MainBaseStation(id);
+            MainBaseStation *baseStation = new MainBaseStation(id, x, y, h, circle, speed,type);
             m_vpBaseStationList.push_back(baseStation);
             return id;
         }
@@ -87,7 +89,8 @@ namespace CellularNetworkDemonstration {
         }
 
     private:
-        DemoDataManager() { }
+        DemoDataManager() {
+        }
         int getNewId(int val) {
             static int i = 0;
             static int j = 0;
@@ -104,6 +107,6 @@ namespace CellularNetworkDemonstration {
         }
         vector<MainBaseStation *> m_vpBaseStationList;
         vector<MainMobileClient *> m_vpMobileClientList;
-        
+
     };
 }

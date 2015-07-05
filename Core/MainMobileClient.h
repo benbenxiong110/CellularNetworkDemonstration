@@ -15,8 +15,8 @@ namespace CellularNetworkDemonstration {
         SDL_Texture *draw() {
             return render();
         }
-        SDL_Texture *render() {
-
+        virtual SDL_Texture *render() {
+            return nullptr;
         }
 
         int getId() const {

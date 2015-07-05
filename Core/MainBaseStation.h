@@ -1,7 +1,7 @@
 #pragma once
 #include "Include.h"
 namespace CellularNetworkDemonstration {
-    
+
     class MainBaseStation {
     public:
         enum BaseStationType {
@@ -9,9 +9,17 @@ namespace CellularNetworkDemonstration {
             TYPE_MACRO,
             TYPE_MICRO
         };
-        MainBaseStation(int ID):id(ID) {
-
+        MainBaseStation(int ID, int x = 0, int y = 0, int h = 100,
+            int circle = 3000, int speed = 2000,
+            BaseStationType type = TYPE_UNKNOWN) :id(ID) {
+            this->x = x;
+            this->y = y;
+            this->height = h;
+            this->circle = circle;
+            this->speed = speed;
+            this->type = type;
         }
+
         ~MainBaseStation() {
 
         }
@@ -29,10 +37,10 @@ namespace CellularNetworkDemonstration {
             return type;
         }
 
-        const char *getTypeName() const{
-            const static char* name_unknown = "未知";
-            const static char* name_micro = "微站";
-            const static char* name_macro = "宏站";
+        const string getTypeName() const {
+            const static string name_unknown = "δ֪";
+            const static string name_micro = "΢վ";
+            const static string name_macro = "��վ";
             switch (type) {
                 case CellularNetworkDemonstration::MainBaseStation::TYPE_UNKNOWN:
                     return name_unknown;
@@ -40,7 +48,22 @@ namespace CellularNetworkDemonstration {
                     return name_macro;
                 case CellularNetworkDemonstration::MainBaseStation::TYPE_MICRO:
                     return name_micro;
-            }
+            } return name_unknown;
+        }
+        int getX() const {
+            return x;
+        }
+        int getY() const {
+            return y;
+        }
+        int getHeight() const {
+            return height;
+        }
+        int getCircle() const {
+            return circle;
+        }
+        int getSpeed() const {
+            return speed;
         }
     private:
         const int id;
@@ -48,8 +71,8 @@ namespace CellularNetworkDemonstration {
         int y;
         int height;
         BaseStationType type;
-        double radio;
-        
-        
+        int circle;
+        int speed;
+
     };
 }

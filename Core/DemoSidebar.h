@@ -3,6 +3,7 @@
 #include "DemoDataManager.h"
 #include "DemoBaseStationListItem.h"
 #include "DemoMobileClientListItem.h"
+#include "DemoAttributeListItem.h"
 
 namespace CellularNetworkDemonstration {
     class DemoSidebar : public UIBase {
@@ -151,23 +152,25 @@ namespace CellularNetworkDemonstration {
             if (event.user.code & SDL_DEMO_SIDEBAR) {
                 switch (event.user.code) {
                     case SDL_DEMO_SIDEBAR_BASE_STATION:
-                    {
-                        int baseStation = *(int *) (event.user.data1);
-                    }
-                    setLevel(1);
-                    return true;
+                        updateListItemLv1(0, *( int * ) ( event.user.data1 ));
+                        setLevel(1);
+                        return true;
                     case SDL_DEMO_SIDEBAR_MOBILE_CLIENT:
-                    {
-                        int baseStation = *(int *) (event.user.data1);
-                    }
-                    setLevel(1);
-                    return true;
+                        updateListItemLv1(1, *( int * ) ( event.user.data1 ));
+                        setLevel(1);
+                        return true;
                     case SDL_DEMO_SIDEBAR_CHIPSET:
-                    {
-                        int baseStation = *(int *) (event.user.data1);
-                    }
-                    setLevel(2);
-                    return true;
+                        updateListItemLv2(1, *( int * ) ( event.user.data1 ), 1);
+                        setLevel(2);
+                        return true;
+                    case SDL_DEMO_SIDEBAR_SCREEN:
+                        updateListItemLv2(1, *( int * ) ( event.user.data1 ), 2);
+                        setLevel(2);
+                        return true;
+                    case SDL_DEMO_SIDEBAR_KEYBOARD:
+                        updateListItemLv2(1, *( int * ) ( event.user.data1 ), 3);
+                        setLevel(2);
+                        return true;
                 }
             }
             return false;
@@ -177,7 +180,8 @@ namespace CellularNetworkDemonstration {
         // 属性
         bool m_bSwitching = false;
         int m_iSelectedTypeLv1 = 0; // 0 - 基站， 1 - 移动台
-        int m_iSelectedTypeLv2 = 1;
+        int m_iSelectedIdLv1 = 0;
+        int m_iSelectedTypeLv2 = 1; // 1 - Chipset, 2 - Screen, 3 - Keyboard
         int m_iCurrentLevel = 0;
         int m_iPreviousLevel = 0;
 
@@ -195,11 +199,101 @@ namespace CellularNetworkDemonstration {
 
         vector<DemoBaseStationListItem *> m_vpBaseStationList;
         vector<DemoMoblieClientListItem *> m_vpMobileClientList;
+        vector<DemoAttributeListItem *>m_vpAttributeListLv1;
+        vector<DemoAttributeListItem *>m_vpAttributeListLv2;
 
         // 子元素
         //MenuSystemClose *m_pMenuSystemClose;
         //SDL_Rect *m_pMenuSystemCloseRect;
 
+        bool updateListItemLv1(int lv1Type, int lv1Id) {
+            if (lv1Id == m_iSelectedIdLv1 && lv1Type == m_iSelectedTypeLv1) {
+                return false;
+            }
+            m_iSelectedIdLv1 = lv1Id;
+            m_iSelectedTypeLv1 = lv1Type;
+            for (unsigned int i = 0; i < m_vpAttributeListLv1.size(); i++) {
+                DELETE_IF_EXIST(m_vpAttributeListLv1[i]);
+            }
+            m_vpAttributeListLv1.clear();
+
+            if (lv1Type == 0) {
+                // Base Station
+                MainBaseStation * baseStation = DemoDataManager::get().getBaseStation(m_iSelectedIdLv1);
+                stringstream ss; string s;
+                ss << baseStation->getX();
+                ss >> s;
+                ss.clear();
+                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "坐标-x", s));
+                ss << baseStation->getY();
+                ss >> s;
+                ss.clear();
+                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "坐标-y", s));
+                ss << baseStation->getHeight();
+                ss >> s;
+                ss.clear();
+                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "高度", s));
+                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "类型", baseStation->getTypeName()));
+                ss << baseStation->getSpeed();
+                ss >> s;
+                ss.clear();
+                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "数据速率", s));
+                ss << baseStation->getCircle();
+                ss >> s;
+                ss.clear();
+                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "覆盖半径", s));
+            } else {
+                // Mobile Client
+                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "号码", ""));
+                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "通信模式", ""));
+                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "移动速度", ""));
+                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, "频率", ""));
+
+                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, DemoAttributeListItem::ATTRIBUTE_TYPE_CHIPSET, m_iSelectedIdLv1));
+                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, DemoAttributeListItem::ATTRIBUTE_TYPE_SCREEN, m_iSelectedIdLv1));
+                m_vpAttributeListLv1.push_back(new DemoAttributeListItem(m_pRenderer, DemoAttributeListItem::ATTRIBUTE_TYPE_KEYBOARE, m_iSelectedIdLv1));
+            }
+
+            return true;
+        }
+        bool updateListItemLv2(int lv1Type, int lv1Id, int lv2Type) {
+            if (!updateListItemLv1(lv1Type, lv1Id) && lv2Type == m_iSelectedTypeLv2) {
+                return false;
+            }
+            m_iSelectedTypeLv2 = lv2Type;
+            for (unsigned int i = 0; i < m_vpAttributeListLv2.size(); i++) {
+                DELETE_IF_EXIST(m_vpAttributeListLv2[i]);
+            }
+            m_vpAttributeListLv2.clear();
+            switch (lv2Type) {
+                case 1:
+                    // Chipset
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "类型", ""));
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "宽度", ""));
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "高度", ""));
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "处理速度", ""));
+                    break;
+                case 2:
+                    // Screen
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "屏幕宽度", ""));
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "屏幕高度", ""));
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "颜色", ""));
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "分辨率-x", ""));
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "分辨率-y", ""));
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "类型", ""));
+                    break;
+                case 3:
+                    // Keyboard
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "按键个数", ""));
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "按键宽度", ""));
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "按键高度", ""));
+                    m_vpAttributeListLv2.push_back(new DemoAttributeListItem(m_pRenderer, "颜色", ""));
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        }
 
         // 绘制界面元素
         virtual void doRender() {
@@ -246,13 +340,31 @@ namespace CellularNetworkDemonstration {
                     // 绘制一级菜单
                     // 绘制返回上级图标
                     SDL_RenderCopy(m_pRenderer, m_pArrow, nullptr, m_pArrowLv1Rect);
-                    
+
+                    // 绘制移动台列表项
+                    rect.x = 205;
+                    rect.w = 185;
+                    rect.h = 20;
+                    for (unsigned int i = 0; i < m_vpAttributeListLv1.size(); i++) {
+                        rect.y = 50 + i * 21;
+                        texture = m_vpAttributeListLv1[i]->render();
+                        SDL_RenderCopy(m_pRenderer, texture, m_vpAttributeListLv1[i]->Rect(), &rect);
+                    }
                     break;
                 case 2:
                     // 绘制二级菜单
                     // 绘制返回上级图标
                     SDL_RenderCopy(m_pRenderer, m_pArrow, nullptr, m_pArrowLv2Rect);
 
+                    // 绘制移动台列表项
+                    rect.x = 405;
+                    rect.w = 185;
+                    rect.h = 20;
+                    for (unsigned int i = 0; i < m_vpAttributeListLv2.size(); i++) {
+                        rect.y = 50 + i * 21;
+                        texture = m_vpAttributeListLv2[i]->render();
+                        SDL_RenderCopy(m_pRenderer, texture, m_vpAttributeListLv2[i]->Rect(), &rect);
+                    }
                     break;
             }
 
@@ -270,7 +382,7 @@ namespace CellularNetworkDemonstration {
             switch (m_iCurrentLevel) {
                 case 0:
                     if (percent != 0) {
-                        delta = (currentTick - lastTick) / DURATION;
+                        delta = ( currentTick - lastTick ) / DURATION;
                         percent -= delta;
                         if (percent <= 0) {
                             percent = 0;
@@ -283,7 +395,7 @@ namespace CellularNetworkDemonstration {
                 case 1:
                     if (percent != 100) {
                         if (percent < 100) {
-                            delta = (currentTick - lastTick) / DURATION;
+                            delta = ( currentTick - lastTick ) / DURATION;
                             percent += delta;
                             if (percent >= 100) {
                                 percent = 100;
@@ -291,30 +403,29 @@ namespace CellularNetworkDemonstration {
                             }
                             // 缓动曲线设置为正弦
                             animatiionValue = SDL_static_cast(int, 200 * easeInOut(percent / 100.0));
-                        }
-                        else {
-                            delta = (currentTick - lastTick) / DURATION;
+                        } else {
+                            delta = ( currentTick - lastTick ) / DURATION;
                             percent -= delta;
                             if (percent <= 100) {
                                 percent = 100;
                                 m_bSwitching = false;
                             }
                             // 缓动曲线设置为正弦
-                            animatiionValue = SDL_static_cast(int, 200 * easeInOut((percent - 100) / 100.0));
+                            animatiionValue = SDL_static_cast(int, 200 + 200 * easeInOut(( percent - 100 ) / 100.0));
                         }
 
                     }
                     break;
                 case 2:
                     if (percent != 200) {
-                        delta = (currentTick - lastTick) / DURATION;
+                        delta = ( currentTick - lastTick ) / DURATION;
                         percent += delta;
                         if (percent >= 200) {
                             percent = 200;
                             m_bSwitching = false;
                         }
                         // 缓动曲线设置为正弦
-                        animatiionValue = SDL_static_cast(int, 200 * easeInOut((percent - 100) / 100.0));
+                        animatiionValue = SDL_static_cast(int, 200 + 200 * easeInOut(( percent - 100 ) / 100.0));
 
                     }
                     break;
@@ -324,7 +435,7 @@ namespace CellularNetworkDemonstration {
         }
 
         inline double easeInOut(double val) {
-            return (-0.5 * (SDL_cos(3.14159 * val) - 1));
+            return ( -0.5 * ( SDL_cos(3.14159 * val) - 1 ) );
         }
 
         virtual void doUpdate() {
@@ -333,13 +444,11 @@ namespace CellularNetworkDemonstration {
             }
             SDL_log(m_sMousePosition.x);
             SDL_log(m_sMousePosition.y);
+            SDL_Rect rect;
             switch (m_iCurrentLevel) {
 
                 case 0:
-                {
 
-
-                    SDL_Rect rect;
                     rect.x = 5;
                     rect.w = 185;
                     rect.h = 20;
@@ -347,8 +456,7 @@ namespace CellularNetworkDemonstration {
                         rect.y = 50 + i * 21;
                         if (SDL_PointInRect(m_sMousePosition, rect)) {
                             m_vpBaseStationList[i]->update(SDL_RelationPoint(&m_sMousePosition, &rect));
-                        }
-                        else {
+                        } else {
                             m_vpBaseStationList[i]->update();
                         }
                     }
@@ -361,8 +469,7 @@ namespace CellularNetworkDemonstration {
                         if (SDL_PointInRect(m_sMousePosition, rect)) {
 
                             m_vpMobileClientList[i]->update(SDL_RelationPoint(&m_sMousePosition, &rect));
-                        }
-                        else {
+                        } else {
                             m_vpMobileClientList[i]->update();
                         }
                     }
@@ -370,15 +477,43 @@ namespace CellularNetworkDemonstration {
                 case 1:
                     if (SDL_PointInRect(m_sMousePosition, *m_pArrowLv1Rect) && MouseManager::get().isLeftButtonDown()) {
                         upLevel();
+
+                        return;
+                    }
+
+                    rect.x = 205;
+                    rect.w = 185;
+                    rect.h = 20;
+                    for (unsigned int i = 0; i < m_vpAttributeListLv1.size(); i++) {
+                        rect.y = 50 + i * 21;
+                        if (SDL_PointInRect(m_sMousePosition, rect)) {
+
+                            m_vpAttributeListLv1[i]->update(SDL_RelationPoint(&m_sMousePosition, &rect));
+                        } else {
+                            m_vpAttributeListLv1[i]->update();
+                        }
                     }
                     break;
                 case 2:
                     if (SDL_PointInRect(m_sMousePosition, *m_pArrowLv2Rect) && MouseManager::get().isLeftButtonDown()) {
                         upLevel();
                     }
+
+                    rect.x = 405;
+                    rect.w = 185;
+                    rect.h = 20;
+                    for (unsigned int i = 0; i < m_vpAttributeListLv2.size(); i++) {
+                        rect.y = 50 + i * 21;
+                        if (SDL_PointInRect(m_sMousePosition, rect)) {
+
+                            m_vpAttributeListLv2[i]->update(SDL_RelationPoint(&m_sMousePosition, &rect));
+                        } else {
+                            m_vpAttributeListLv2[i]->update();
+                        }
+                    }
                     break;
-                }
             }
+
         }
     };
 }
