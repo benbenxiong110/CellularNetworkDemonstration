@@ -104,6 +104,7 @@
     <ClInclude Include="DemoDataManager.h" />
     <ClInclude Include="DemoHexagon.h" />
     <ClInclude Include="DemoMap.h" />
+    <ClInclude Include="DemoMapIcon.h" />
     <ClInclude Include="DemoMobileClientListItem.h" />
     <ClInclude Include="DemoNotification.h" />
     <ClInclude Include="DemoSidebar.h" />

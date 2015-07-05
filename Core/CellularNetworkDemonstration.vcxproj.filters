@@ -92,6 +92,9 @@
     <Filter Include="Main\UI Component\ViewPanel\DemonstrationView\Tools">
       <UniqueIdentifier>{db2de585-ab68-4371-8ab1-94126525433d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Main\UI Component\ViewPanel\DemonstrationView\MapComponent">
+      <UniqueIdentifier>{6ac06770-7626-4195-b9d0-3594ea4d8b48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -201,6 +204,9 @@
     </ClInclude>
     <ClInclude Include="DemoAttributeListItem.h">
       <Filter>Main\UI Component\ViewPanel\DemonstrationView\SidebarComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoMapIcon.h">
+      <Filter>Main\UI Component\ViewPanel\DemonstrationView\MapComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

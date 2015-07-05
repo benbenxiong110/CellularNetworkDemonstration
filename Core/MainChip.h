@@ -1,8 +1,7 @@
 #pragma once
 #include "Include.h"
 namespace CellularNetworkDemonstration {
-    class MainChip
-    {
+    class MainChip {
     public:
         const static int INFO_UNKNOWN = -1;
         enum ChipType {
@@ -23,16 +22,22 @@ namespace CellularNetworkDemonstration {
         }
         ~MainChip() {
         }
+        void setChip(ChipType type, int width, int height, int speed) {
+            this->type = type;
+            this->width = width;
+            this->height = height;
+            this->speed = speed;
+        }
         void setType(ChipType type) {
             this->type = type;
         }
-        ChipType getType() const{
+        ChipType getType() const {
             return this->type;
         }
         void setWidth(int width) {
             this->width = width;
         }
-        int getWidth() const{
+        int getWidth() const {
             return this->width;
         }
         void setHeight(int height) {

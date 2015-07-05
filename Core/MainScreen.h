@@ -25,6 +25,21 @@ namespace CellularNetworkDemonstration {
         }
         ~MainScreen() {
         }
+
+        void setScreen(ScreenType type,
+            int width,
+            int height,
+            int color,
+            int resolutionX,
+            int resolutionY) {
+            this->type = type;
+            this->width = width;
+            this->height = height;
+            this->color = color;
+            this->resolutionX = resolutionX;
+            this->resolutionY = resolutionY;
+        }
+
         void setType(ScreenType type) {
             this->type = type;
         }

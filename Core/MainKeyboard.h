@@ -8,13 +8,19 @@ namespace CellularNetworkDemonstration {
             int keyNumber = 103,
             int width = INFO_UNKNOWN,
             int height = INFO_UNKNOWN,
-            const SDL_Color &color = SDL_Color{ 0,0,0,0}) {
+            const string &color = "ºÚÉ«") {
             this->keyNumber = keyNumber;
             this->width = width;
             this->height = height;
             this->color = color;
         }
         ~MainKeyboard() {
+        }
+        void setKeyboard(int keyNumber, int width, int height,const string color) {
+            this->keyNumber = keyNumber;
+            this->width = width;
+            this->height = height;
+            this->color = color;
         }
         void setKeyNumber(int keyNumber) {
             this->keyNumber = keyNumber;
@@ -34,16 +40,16 @@ namespace CellularNetworkDemonstration {
         int getHeight() const {
             return this->height;
         }
-        void setColor(SDL_Color& color) {
+        void setColor(string& color) {
             this->color = color;
         }
-        SDL_Color getColor() const {
+        string getColor() const {
             return this->color;
         }
     private:
         int keyNumber;
         int width;
         int height;
-        SDL_Color color;
+        string color;
     };
 }

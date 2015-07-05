@@ -44,6 +44,7 @@ namespace CellularNetworkDemonstration {
         //SDL_Rect *m_pMenuSystemCloseRect;
         DemoHexagon *hexagon;
 
+
         // 绘制界面元素
         virtual void doRender() {
             SDL_SetRenderDrawColor(m_pRenderer, 20, 220, 120, 255);
@@ -58,6 +59,7 @@ namespace CellularNetworkDemonstration {
                     SDL_RenderCopy(m_pRenderer, hexagonTexture, nullptr, &r);
                 }
             }
+
         }
 
         virtual void doUpdate() {
