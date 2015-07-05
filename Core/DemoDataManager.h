@@ -16,12 +16,19 @@ namespace CellularNetworkDemonstration {
                 manager = new DemoDataManager();
 
                 // Initialize Data
-                manager->addBaseStation(100, 100, 200, 2000, 3000, MainBaseStation::TYPE_MICRO);
-                manager->addBaseStation(100, 0, 260, 2000, 2300, MainBaseStation::TYPE_MACRO);
-                manager->addBaseStation(0, 100, 300, 2000, 2200, MainBaseStation::TYPE_MICRO);
-                manager->addBaseStation(660, 120, 220, 2000, 3600, MainBaseStation::TYPE_UNKNOWN);
-                manager->addBaseStation(400, 230, 100, 2000, 2100, MainBaseStation::TYPE_MACRO);
-                manager->addBaseStation(430, 210, 140, 2000, 4500, MainBaseStation::TYPE_MICRO);
+                /*
+                manager->addBaseStation(getHexagonPositionX(0, 0), 
+                    getHexagonPositionY(0, 0), 200, 2000, 3000, MainBaseStation::TYPE_MICRO);*/
+                manager->addBaseStation(getHexagonPositionX(0, 1), 
+                    getHexagonPositionY(0, 1), 260, 2000, 2300, MainBaseStation::TYPE_MACRO);
+                manager->addBaseStation(getHexagonPositionX(0, 2),
+                    getHexagonPositionY(0, 2), 300, 2000, 2200, MainBaseStation::TYPE_MICRO);
+                manager->addBaseStation(getHexagonPositionX(1, 0), 
+                    getHexagonPositionY(1, 0), 220, 2000, 3600, MainBaseStation::TYPE_UNKNOWN);
+                manager->addBaseStation(getHexagonPositionX(1, 1), 
+                    getHexagonPositionY(1, 1), 100, 2000, 2100, MainBaseStation::TYPE_MACRO);
+                //manager->addBaseStation(getHexagonPositionX(0, 0), 
+                //    getHexagonPositionY(0, 0), 140, 2000, 4500, MainBaseStation::TYPE_MICRO);
 
                 manager->addMobileClient(MAIN_MOBILE_CLIENT_LAPTOP, 100, 200);
                 manager->addMobileClient(MAIN_MOBILE_CLIENT_MOBILE_PHONE, 300, 180);
@@ -111,7 +118,16 @@ namespace CellularNetworkDemonstration {
             }
         }
 
+        static inline  int getHexagonPositionX(int row, int col) {
+            int em = 200;
+            return SDL_static_cast(int, -( row % 2 == 0 ? em : 0.14 * em ) + col * 1.72 * em);
 
+        }
+        static inline int getHexagonPositionY(int row, int col) {
+            int em = 200;
+            return SDL_static_cast(int, 1.5 * em * row + 0.5 * em);
+
+        }
 
         vector<MainBaseStation *> m_vpBaseStationList;
         vector<MainMobileClient *> m_vpMobileClientList;

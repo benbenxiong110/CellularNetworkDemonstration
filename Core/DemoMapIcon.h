@@ -13,7 +13,7 @@ namespace CellularNetworkDemonstration {
             SDL_Texture* origTarget = SDL_GetRenderTarget(m_pRenderer);
             Uint8 r, g, b, a;
             SDL_GetRenderDrawColor(m_pRenderer, &r, &g, &b, &a);
-            
+
 
             m_pIconRect = new SDL_Rect{ 4, 4, 20, 20 };
 
@@ -26,11 +26,11 @@ namespace CellularNetworkDemonstration {
             DELETE_IF_EXIST(m_pIconRect)
         }
 
-        int getMobileClientId() const{
+        int getMobileClientId() const {
             return m_iMobileClientID;
         }
 
-        
+
 
     private:
         const int m_iMobileClientID;
@@ -41,8 +41,13 @@ namespace CellularNetworkDemonstration {
         virtual void doRender() {
             SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 0);
             SDL_RenderClear(m_pRenderer);
-            SDL_SetRenderDrawColor(m_pRenderer, 180, 120, 40, getRenderAlpha());
-            for (int i = 0; i < 30; i ++) {
+            if (DemoDataManager::get().getMobileClient(m_iMobileClientID)->isConnected()) {
+
+                SDL_SetRenderDrawColor(m_pRenderer, 180, 120, 40, getRenderAlpha());
+            } else {
+                SDL_SetRenderDrawColor(m_pRenderer, 255, 130, 110, 225);
+            }
+            for (int i = 0; i < 30; i++) {
                 SDL_RenderDrawLine(m_pRenderer, ( i < 14 ? 14 - i : i - 14 ), i, ( i < 14 ? 14 + i : 44 - i ), i);
             }
             SDL_RenderCopy(m_pRenderer, DemoDataManager::get().getMobileClient(m_iMobileClientID)->render(m_pRenderer), nullptr, m_pIconRect);

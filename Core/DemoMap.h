@@ -18,8 +18,14 @@ namespace CellularNetworkDemonstration {
             //m_pMenuSystemCloseRect->y = 0;
             //m_pMenuSystemCloseRect->w = 45;
             //m_pMenuSystemCloseRect->h = 20;
-            SDL_Color color = { 255, 255, 20, 100 };
-            hexagon = new DemoHexagon(renderer, &color);
+            
+            //hexagon = new DemoHexagon(renderer);
+
+            vector<MainBaseStation *>& baseStationList
+                = DemoDataManager::get().getBaseStationList();
+            for (unsigned int i = 0; i < baseStationList.size(); i++) {
+                m_vpHexagon.push_back(new DemoHexagon(m_pRenderer, baseStationList[i]->getId()));
+            }
 
             vector<MainMobileClient *>& mobileClientList
                 = DemoDataManager::get().getMobileClientList();
@@ -31,7 +37,7 @@ namespace CellularNetworkDemonstration {
 
         ~DemoMap() {
             // 清理子元素和资源
-            DELETE_IF_EXIST(hexagon);
+            //DELETE_IF_EXIST(hexagon);
 
             //DELETE_IF_EXIST(m_pMenuSystemMinimize)
             //    if (m_pMenuImage) {
@@ -47,24 +53,23 @@ namespace CellularNetworkDemonstration {
         //SDL_Texture *m_pMenuImage;
 
         // 子元素
-        //MenuSystemClose *m_pMenuSystemClose;
-        //SDL_Rect *m_pMenuSystemCloseRect;
-        DemoHexagon *hexagon;
+        
+        vector<DemoHexagon *>m_vpHexagon;
         vector<DemoMapIcon *>m_vpMapIcon;
 
         // 绘制界面元素
         virtual void doRender() {
             SDL_SetRenderDrawColor(m_pRenderer, 20, 220, 120, 255);
             SDL_RenderClear(m_pRenderer);
-            SDL_Texture *hexagonTexture = hexagon->render();
-            int em = 200;
-            SDL_Rect r = { 0, 0, 2 * em, 2 * em };
-            for (int i = 0; i < 3; i++) {
-                r.y = SDL_static_cast(int, 1.5 * em * i - 0.5 * em);
-                for (int j = 0; j < 3; j++) {
-                    r.x = SDL_static_cast(int, -( i % 2 == 0 ? em : 0.14 * em ) + j * 1.72 * em);
-                    SDL_RenderCopy(m_pRenderer, hexagonTexture, nullptr, &r);
-                }
+            
+            
+            SDL_Rect r;
+            r = { 0, 0, 400, 400 };
+            for (unsigned int i = 0; i < m_vpHexagon.size(); i++) {
+                DemoHexagon *hexagon = m_vpHexagon[i];
+                r.x = DemoDataManager::get().getBaseStation(hexagon->getBaseStationId())->getX() - 200;
+                r.y = DemoDataManager::get().getBaseStation(hexagon->getBaseStationId())->getY() - 200;
+                SDL_RenderCopy(m_pRenderer, hexagon->render(), hexagon->Rect(), &r);
             }
 
             r = { 0, 0, 30, 30 };
@@ -89,6 +94,23 @@ namespace CellularNetworkDemonstration {
                     m_vpMapIcon[i]->update(SDL_RelationPoint(&m_sMousePosition, &r));
                 } else {
                     m_vpMapIcon[i]->update();
+                }
+            }
+            r = { 0, 0, 400, 400 };
+            for (unsigned int i = 0; i < m_vpHexagon.size(); i++) {
+                DemoHexagon *hexagon = m_vpHexagon[i];
+                r.x = DemoDataManager::get().getBaseStation(hexagon->getBaseStationId())->getX() - 200;
+                r.y = DemoDataManager::get().getBaseStation(hexagon->getBaseStationId())->getY() - 200;
+                if (!detected 
+                    // To avoid distance conflict
+                    && SDL_PointInRect(m_sMousePosition,*m_pRect)
+                    // Use round area
+                    && (SDL_pow( m_sMousePosition.x - r.x - 200 ,2) 
+                    + SDL_pow( m_sMousePosition.y - r.y - 200 ,2) 
+                    < 200 * 200) ){
+                    m_vpHexagon[i]->update(SDL_RelationPoint(&m_sMousePosition, &r));
+                } else {
+                    m_vpHexagon[i]->update({-10000,-1000 });
                 }
             }
         }
